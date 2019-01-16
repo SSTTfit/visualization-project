@@ -1,0 +1,86 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="{% static 'echarts.js'%}"></script>
+    <script src="{% static 'jquery-3.3.1.js'%}"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 800px;height:600px;"></div>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        function bind(result){
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            title: {
+            text: '基础雷达图'
+            },
+            tooltip: {},
+            legend: {
+            data: ['急/慢性肾炎', '膀胱炎']
+            },
+            radar: {
+        // shape: 'circle',
+            name: {
+              textStyle: {
+                color: '#000',
+                fontSize:20,
+                backgroundColor: '#eef',
+                borderRadius: 5,
+                padding: [10, 10]
+           }
+            },
+            indicator: [
+               { name: '晴', max: 50},
+               { name: '霾', max: 50},
+               { name: '雾', max: 50},
+               { name: '雪', max: 50},
+               { name: '雨', max: 50},
+               { name: '阴', max: 50}
+            ]
+            },
+            series: [{
+                name: '天气状况与发病率关联',
+                type: 'radar',
+            // areaStyle: {normal: {}},
+                data : [
+                {
+                    value : result[0],
+                    name : '急/慢性肾炎'
+                },
+                {
+                value : result[1],
+                name : '膀胱炎'
+                }
+                ]
+            }]
+        };
+    myChart.setOption(option)
+}
+        $.ajax({
+        type : 'get',
+        async : true, //同步执行
+        url :'{% url 'data' %}', //web.xml中注册的Servlet的url-pattern
+        data : {}, //无参数
+        dataType : 'json', //返回数据形式为json
+        success : function(result) {
+            if (result) {
+                //把result(即Json数据)以参数形式放入Echarts代码中
+                alert("查询："+result);
+                bind(result);
+            
+            }
+        },
+        error : function(errorMsg) {
+            alert("加载数据失败");
+        }
+    }); //ajax
+
+
+    </script>
+</body>
+</html>

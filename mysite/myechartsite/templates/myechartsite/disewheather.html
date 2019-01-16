@@ -1,0 +1,60 @@
+{% extends 'myechartsite/base.html' %}
+{% load staticfiles %}
+{% block title %}雷达图{% endblock %}
+{% block css %}{% endblock %}
+
+{% block content %}
+
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 800px;height:600px;"></div>
+    <script type="text/javascript">
+        var a = {{ data|safe }}
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            title: {
+            text: '基础雷达图'
+            },
+            tooltip: {},
+            legend: {
+            data: ['急/慢性肾炎', '膀胱炎']
+            },
+            radar: {
+        // shape: 'circle',
+            name: {
+              textStyle: {
+                color: '#000',
+                fontSize:15,
+                backgroundColor: '#eef',
+                borderRadius: 5,
+                padding: [10, 10]
+           }
+            },
+            indicator: [
+               { name: '晴', max: 50},
+               { name: '霾', max: 50},
+               { name: '雾', max: 50},
+               { name: '雪', max: 50},
+               { name: '雨', max: 50},
+               { name: '阴', max: 50}
+            ]
+            },
+            series: [{
+                name: '天气状况与发病率关联',
+                type: 'radar',
+            // areaStyle: {normal: {}},
+                data : [
+                {
+                    value : a.kidney,
+                    name : '急/慢性肾炎'
+                },
+                {
+                value :a.bladder,
+                name : '膀胱炎'
+                }
+                ]
+            }]
+        };
+        myChart.setOption(option)
+    </script>
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="{% static 'echarts.js'%}"></script>
+    <script src="{% static 'jquery-3.3.1.js'%}"></script>
+</head>
+<body>
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        var a = {{ data|safe }};
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+        	angleAxis: {
+        type: 'category',
+        data: ['疾病1', '疾病2', '疾病3', '疾病4'],
+        z: 10
+    },
+    radiusAxis: {
+    },
+    polar: {
+    },
+    series: [{
+        type: 'bar',
+        data: a.disease1,
+        coordinateSystem: 'polar',
+        name: 'A',
+        stack: 'a'
+    }, {
+        type: 'bar',
+        data: a.disease2,
+        coordinateSystem: 'polar',
+        name: 'B',
+        stack: 'a'
+    }, {
+        type: 'bar',
+        data: a.disease3,
+        coordinateSystem: 'polar',
+        name: 'C',
+        stack: 'a'
+    }, {
+        type: 'bar',
+        data: a.disease4,
+        coordinateSystem: 'polar',
+        name: 'D',
+        stack: 'a'
+    }],
+    legend: {
+        show: true,
+        data: ['A', 'B', 'C','D']
+    }
+};
+
+
+
+
+
+
+
+        myChart.setOption(option)
+    </script>
+</body>
+</html>
