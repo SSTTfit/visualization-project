@@ -1,0 +1,20 @@
+#backbtn {
+   outline:none;
+    width: 58px;
+    height: 58px;
+    border-radius: 50px;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 22px;
+    line-height: 1.428571429;
+    border-radius: 50px ;
+    margin-left:30px;
+    margin-top:30px;
+    background: #29cb97;
+}
+#backbtn:hover{
+    box-shadow: 2px 2px 2px #2aabd2;
+}
+#backbtn:active{
+    box-shadow: .05em .1em .2em rgba(28,97,94,.6) inset;
+}

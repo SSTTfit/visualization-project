@@ -1,0 +1,65 @@
+/* 左侧按钮组 */
+#lbtngp{
+  margin-top:80px;
+  width:123px;
+}
+#lbtngp button{
+  border: 0px;
+  font-size: 18px;
+  height: 55px;
+  border-radius: 5px;
+  margin-right: -4px;
+  z-index: 10;
+  outline:none;
+}
+.unshow{
+  color:#8a8a8a;
+}
+.show{
+  color:#ffffff! important;
+  background: linear-gradient(to top , rgb(65,115,238),rgb(98,151,245));
+  opacity: 0.9;
+}
+
+#main {
+    width: 95%;
+    height: 90%;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}
+
+.choose{
+    width: 268px;
+    height: 270px;
+    position:relative;
+    left: 40px;
+}
+.head{
+    margin-top: 30px;
+}
+.choose_1 {
+    width: 253px;height: 196px;color: #748aa1;position: relative;top: 17px;
+    overflow-y: scroll;
+}
+.choose_1::-webkit-scrollbar {
+    width: 6px;
+    /* height: 10px; */
+}
+.choose_1::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    width: 6px;
+    height: 163px;
+    background: #d8d8d8;
+    box-shadow: 0px 2px  3px rgba(0,0,0,0.5);
+    /* -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1); */
+}
+.choose_1::-webkit-scrollbar-track {
+    width: 6px;
+    height: 222px;
+    background: #f5f5f5;
+    border-radius: 3px;
+}
+.choose_1>select{
+    width: 100%;
+}

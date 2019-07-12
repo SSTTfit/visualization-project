@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="../jquery-3.3.1.js"></script>
+    <style>
+        body {margin: 0;padding: 0;
+        }
+        #map {position: absolute;top: 0;bottom: 0;width: 100%;
+        }
+    </style>
+</head>
+<body>
+<style>
+    .marker {
+        width: 124px;
+        height: 25px;
+        background: #6095f5;
+        border-radius: 12.5px;
+        box-shadow: 0px 1px  5px rgba(0,0,0,0.5);
+        color: #ffffff;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25px;
+
+    }
+    .marker>img{
+        display:inline-block;
+        vertical-align: middle;
+    }
+    .marker>div{
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>
+<div id="map"></div>
+</body>
+<script>
+  var m=15;
+  var n=0;
+    function rand() {
+        return Math.floor(Math.random()*100+1);
+    }
+    function creatDom(prop) {
+        // create a DOM element for the marker
+        var el = document.createElement('div');
+        var img=document.createElement('img');
+        var tex=document.createElement('div')
+        el.className = 'marker';
+        img.src='../img/firstindexuser.png';
+        tex.innerText='新增' + prop.NumberIncrease + '人';
+        el.appendChild(img);
+        el.appendChild(tex);
+        return el;
+    }
+    var places = {
+        "type": "FeatureCollection",
+        "features": [{
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 0,
+                "position":'北京'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [116.41667,39.91667]
+            }
+        },
+            {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 0,
+                "position":'银川'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [106.26667,38.46667]
+            }
+        },
+            {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 0,
+                "position":'武汉'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [114.31667,30.51667]
+            }
+        },
+            {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 0,
+                "position":'西安'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [108.95000,34.26667]
+            }
+        },
+            {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 0,
+                "position":'南京'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [118.46,32.03]
+            }
+        },
+            {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 0,
+                "position":'成都'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [104.06667,30.66667]
+            }
+        },
+            {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 0,
+                "position":'厦门'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [118.10000,24.46667]
+            }
+        }]
+    };
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWd5cHRsIiwiYSI6ImNqcDI3eGR2YjAyY2Mza3J0MnVxcDBleXEifQ.G5rT-P_uHSS1U7v-nuquMg';
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/agyptl/cjv0c4q13659t1fryrcc3vcxx', // stylesheet location
+        center: [103.000,35.000], // starting position [lng, lat]
+        minZoom: 3.41,// starting zoom
+        maxZoom: 6,
+        zoom:4
+    });
+
+    map.on('load', function() {
+        map.addSource('people_increase',{
+            type: 'geojson',
+            data:  places
+        });
+        map.addLayer({
+            "id": 'people',
+            "type": "symbol",
+            "source": "people_increase",
+            "layout": {
+                "icon-image": "circle-15",
+                "text-field": "{position}",
+                "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                "text-offset": [0, 1.5],
+                "text-size":10,
+                "text-anchor": "left"
+               // "icon-allow-overlap": true
+            }
+        });
+        //设置标签
+        var markers = {};
+        var length;
+
+        length=places.features.length;
+        function updateMarkers() {
+            // for every cluster on the screen, create an HTML marker for it (if we didn't yet),
+            var features = places.features;
+            //console.log(features);
+            //console.log(features.length);
+            for (var i = 0; i < features.length; i++) {
+                if(markers[i]!=null)
+                {
+                  //  console.log(i);
+                    markers[i].remove();
+                }
+                var coords = features[i].geometry.coordinates;
+                var props = features[i].properties;
+                var marker;
+                    var el = creatDom(props);
+                    marker = new mapboxgl.Marker({element: el}).setLngLat(coords).setOffset([0,-20]);
+                    marker.addTo(map);
+                    markers[i]=marker;
+            }
+        };
+        //console.log(length);
+        updateMarkers();
+            setInterval(function () {
+                for (var j = 0; j < length; j++) {
+                    places.features[j].properties.NumberIncrease = Math.floor(Math.random()*(m-n))+n;
+                }
+                map.getSource('people_increase').setData(places);
+                updateMarkers();
+            }, 3000);
+    });
+</script>
+</html>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <script src="jquery.min.js"></script>
+    <style>
+        body {margin: 0;padding: 0;
+        }
+        #map {position: absolute;top: 0;bottom: 0;width: 100%;
+        }
+    </style>
+</head>
+<body>
+<style>
+    .marker {
+        width: 124px;
+        height: 25px;
+        background: #6095f5;
+        border-radius: 12.5px;
+        box-shadow: 0px 1px  5px rgba(0,0,0,0.5);
+        color: #ffffff;
+        text-align: center;
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 25px;
+
+    }
+    .marker>img{
+        display:inline-block;
+        vertical-align: middle;
+    }
+    .marker>div{
+        display: inline-block;
+        vertical-align: middle;
+    }
+</style>
+<div id="map"></div>
+</body>
+<script>
+    var places = {
+        "type": "FeatureCollection",
+        "features": [{
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 78,
+                "position":'北京'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [116.41667,39.91667]
+            }
+        }, {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 24,
+                "position":'银川'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [106.26667,38.46667]
+            }
+        }, {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 65,
+                "position":'武汉'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [114.31667,30.51667]
+            }
+        }, {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 55,
+                "position":'西安'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [108.95000,34.26667]
+            }
+        }, {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 46,
+                "position":'南京'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [118.46,32.03]
+            }
+        }, {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 36,
+                "position":'成都'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [104.06667,30.66667]
+            }
+        }, {
+            "type": "Feature",
+            "properties": {
+                "NumberIncrease": 97,
+                "position":'厦门'
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [118.10000,24.46667]
+            }
+        }]
+    };
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWd5cHRsIiwiYSI6ImNqcDI3eGR2YjAyY2Mza3J0MnVxcDBleXEifQ.G5rT-P_uHSS1U7v-nuquMg';
+    const map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/agyptl/cjv0c4q13659t1fryrcc3vcxx', // stylesheet location
+        center: [103.000,35.000], // starting position [lng, lat]
+        minZoom: 3.41,// starting zoom
+        maxZoom: 6,
+        zoom:4
+    });
+    map.on('load', function() {
+        map.addSource('people_increase',{
+            type: 'geojson',
+            data:  places
+        });
+        map.addLayer({
+            "id": 'people',
+            "type": "symbol",
+            "source": "people_increase",
+            "layout": {
+                "icon-image": "circle-15",
+                "text-field": "{position}",
+                "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                "text-offset": [0, 1.5],
+                "text-size":10,
+                "text-anchor": "left"
+               // "icon-allow-overlap": true
+            }
+        });
+        //设置标签
+        places.features.forEach(function(marker) {
+            // create a DOM element for the marker
+            var el = document.createElement('div');
+            var img=document.createElement('img');
+            var tex=document.createElement('div')
+            el.className = 'marker';
+            img.src='user.png';
+            tex.innerText='新增' + marker.properties.NumberIncrease + '人';
+            el.appendChild(img);
+            el.appendChild(tex);
+           // el.className='marker';
+          //  img.src='user.png';
+           // el.appendChild(img);
+           // el.innerHTML='<img src="user.png">新增' + marker.properties.NumberIncrease + '人';
+
+
+        //add marker to map
+            new mapboxgl.Marker(el)
+                .setLngLat(marker.geometry.coordinates)
+                .setOffset([0,-20])
+                .addTo(map);
+        });
+    });
+
+</script>
+</html>

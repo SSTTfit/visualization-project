@@ -9,6 +9,7 @@
     <title>{% block title %}base{% endblock %}</title>
     <script src="{% static 'js/echarts.js'%}"></script>
 
+    <link href="{% static 'myechartsite/css/basecss.css' %}" rel="stylesheet">
     <!-- Bootstrap -->
     <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
 
@@ -21,41 +22,48 @@
     {% block css %}{% endblock %}
   </head>
   <body>
-    <nav class="navbar navbar-default">
-      <div class="container-fluid">
+
+    <nav class="navbar" style="">
+      <div class="container-fluid" style="padding-right:0;">
         <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#my-nav" aria-expanded="false">
-            <span class="sr-only">切换导航条</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Mysite</a>
+        <div class="navbar-header"style="margin-top:8px;">
+          <a class="navbar-brand" href="{% url 'myechartsite:firstindex' %}" style="padding-top:10px;" ><img src="../../static/myechartsite/img/homelogo.jpg" alt="homelogo" height="50px;" width="50px;"></a>
+          <a class="navbar-brand" style="margin-left:85px;"><img src="../../static/myechartsite/img/navlogo.png" alt="logo" ></a>
         </div>
-
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="my-nav">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'myechartsite:index' %}">主页</a></li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-              {% if request.session.is_login %}
-                  <li><a href="#">当前在线：{{ request.session.user_name }}</a></li>
-                  <li><a href="{% url 'myechartsite:logout' %}">登出</a></li>
+        <div class="collapse navbar-collapse" id="my-nav" >
+          <ul class="nav navbar-nav" >
+            <li>
+              <h3 class="version"  style="">
+                {% if request.session.is_login %}
+                  {% if request.session.level == "expert" %}
+                    专家版
+                  {% elif request.session.level == "doctor" %}
+                    医生版
                   {% else %}
-                  <li><a href="{% url 'myechartsite:login' %}">登录</a></li>
-                  <li><a href="{% url 'myechartsite:register' %}">注册</a></li>
-              {% endif %}
-
+                    个人版
+                  {% endif %}
+                {% else %}
+                  未登录
+                {% endif %}
+              </h3>
+            </li>
+            <li>
+              <h3 class="navlb" >{% block kind %}{% endblock %}</h3>
+            </li>
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-
+<div class="logbg">
     {% block content %}{% endblock %}
-
-
+</div>
+<div class="footbar">
+    <div class="footertext" style="margin-left: 200px;width:58%;">2019普泽众康</div>
+    <div class="footertext" style="">FAQ</div>
+    <div class="footertext" style="margin-left:40px;">PRIVACY</div>
+    <div class="footertext" style="margin-left:40px;">TERMS&CONDITONS</div>
+</div>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

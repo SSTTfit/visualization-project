@@ -1,0 +1,73 @@
+{% extends 'myechartsite/base_show.html' %}
+{% load staticfiles %}
+{% block title %}堆叠折线图{% endblock %}
+{% block css %}
+
+<link rel="stylesheet" href="{% static 'myechartsite/css/diseyearcss.css' %}">
+<link rel="stylesheet" href="{% static 'myechartsite/css/diseage_trend_year.css' %}">
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'myechartsite/js/diseyearjs.js' %}"></script>
+{% endblock %}
+{% block kind %}疾病与年份{% endblock %}
+
+{% block leftsidebar %}
+    <div class="btn-group-vertical" role="group" id="lbtngp" aria-label="类型">
+      <button type="button" class="btn btn-default  btn-block unshow" onclick="jump('{% url 'myechartsite:diseage' %}')">疾病与年龄</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disegender' %}')">疾病与性别</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disewheather' %}')">疾病与天气</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disetemp' %}')">疾病与温度</button>
+      <button type="button" class="btn show">疾病与年份</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disemonth' %}')">疾病与月份</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:diseaqi' %}')">与空气质量</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:arearatiomap' %}')">疾病与地域</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:arearatiochange' %}')">发病率变化</button>
+    </div>
+{% endblock %}
+{% block chart %}
+<div class="row" style="margin-left:0; ">
+    <div class="text-center s1">
+        <label style="color: #b558f6; font-size: large; margin-top: 6px;" id="year1">2019年</label>
+        <label style="color: #d3d3d3; font-size: large; margin-top: 6px;font-size: x-large">|</label>
+        <label style="color: #b558f6; font-size: large; margin-top: 6px;width: auto"id="disease1">急慢性肾炎</label>
+        <label style="font-size: large; position: center; color: #9b9b9b">与年龄段的分布关系</label>
+    </div>
+</div>
+<div class="row s2">
+    <div id="jibingyunianfen" style="width: 80em;height:700px;float:left; margin-top: 0;margin-left: 9%;">
+        <!--细化疾病与年龄的关系展示-->
+        <script type="text/javascript">
+            var myChartNian = echarts.init(document.getElementById('jibingyunianfen'));
+            myChartNian.setOption(optionJibingyunianfen);
+        </script>
+    </div>
+</div>
+{% endblock %}
+{% block rightsidebar %}
+<div class="row">
+    <div class="col-md-6">
+        <label for="" style="font-size:20px;margin-top: 25px;margin-left: 24px">选择疾病类型</label>
+    </div>
+</div>
+<div class="disechoose">
+    <div class="rbtngroup1">
+        <div class="btn-group-vertical scroll1" role="group" aria-label="指标选择" id="rbtn1" >  <!--scroll1待添加-->
+            <button type="button" id="rxxhd" class="btn rbtnnorm" onclick="chooseDieYearzhibiao(this,'rbtnact1',0,'rxxhd','溶血性黄疸')" style="margin-top:10px;">溶血性黄疸</button>
+            <button type="button" id="sy" class="btn rbtnnorm" onclick="chooseDieYearzhibiao(this,'rbtnact2',1,'sy','急慢性肾炎')">急慢性肾炎</button>
+            <button type="button" id="sysy" class="btn rbtnnorm" onclick="chooseDieYearzhibiao(this,'rbtnact3',2,'sysy','肾盂肾炎')">肾盂肾炎</button>
+            <button type="button" id="pgy" class="btn rbtnnorm" onclick="chooseDieYearzhibiao(this,'rbtnact4',3,'pgy','膀胱炎')">膀胱炎</button>
+            <button type="button" id="ndy" class="btn rbtnnorm" onclick="chooseDieYearzhibiao(this,'rbtnact5',4,'ndy','尿道炎')">尿道炎</button>
+            <button type="button" id="ndjs" class="btn rbtnnorm" onclick="chooseDieYearzhibiao(this,'rbtnact6',5,'ndjs','尿道结石')">尿道结石</button>
+            <button type="button" id="jibing1" class="btn rbtnnorm" onclick="chooseDieYearzhibiao(this,'rbtnact7',6,'jibing1','疾病1')">疾病1</button>
+            <button type="button" id="jibing2" class="btn rbtnnorm" onclick="chooseDieYearzhibiao(this,'rbtnact8',7,'jibing2','疾病2')">疾病2</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js%}
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script>
+    function jump(url){
+        window.location.href=url;
+    }
+</script>
+{% endblock %}

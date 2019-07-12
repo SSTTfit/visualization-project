@@ -1,0 +1,27 @@
+{% extends 'myechartsite/base_index_expert.html' %}
+{% load staticfiles %}
+{% block title %}专科医生版索引{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/index_doctorcss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}{% endblock %}
+
+{% block chart %}
+<div class="col-sm-6 col-md-6 col-lg-6">
+    <div class="row kuai" style="">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">疾病与异常指标</label>
+        </div>
+        <a href="{% url 'myechartsite:diseindicator' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/disetemp.png" alt="" style=""></a>
+    </div>
+</div>
+<div class="col-sm-6 col-md-6 col-lg-6">
+</div>
+{% endblock %}
+
+{% block rightsidebar %}
+<div class="row" style="margin-right:0;">
+    <img src="../../static/myechartsite/img/navlogo.png" alt="" style="margin-left: 20%;margin-top: 50%;">
+</div>
+{% endblock %}
+{% block js%}
+
+{% endblock %}

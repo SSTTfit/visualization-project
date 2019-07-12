@@ -1,0 +1,32 @@
+
+.biaoqian{
+    background-color: #ffffff;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    padding-top: 1%;
+    border-radius:30px;
+    box-shadow: 1px 1px 1px 1px #888888;
+}
+.biaoqian1{
+    background-color: #ffffff;
+    width: 150px;
+    height: 50px;
+    text-align: center;
+    border-radius:30px;
+    box-shadow: 1px 1px 1px 1px #888888;
+    margin-top: 5%;
+}
+.kuai{
+    background:rgba(0,0,0,0);
+    width: 500px;
+    height: 360px;
+    margin-left: 15%;
+    margin-top: 3%;
+}
+.tupian{
+    width: 427px;
+    height: 290px;
+    border-radius:10px;
+    margin-top: 3%;
+}

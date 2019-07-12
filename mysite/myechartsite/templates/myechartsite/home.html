@@ -1,0 +1,29 @@
+{% extends 'myechartsite/base.html' %}
+{% load staticfiles %}
+{% block title %}首页{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/homecss.css' %}" rel="stylesheet"/>{% endblock %}
+
+
+{% block content %}
+<div class="" style="float:left;">
+{% if request.session.level == "expert" %}
+  <a style="" href="{% url 'myechartsite:index_expert'%}">
+{% elif request.session.level == "doctor" %}
+  <a style="" href="{% url 'myechartsite:index_doctor'%}">
+{% else %}
+  <a style="" href="{% url 'myechartsite:index_customer'%}">
+{% endif %}
+
+<button type="button"  class="btn" id="backbtn" style=""><span style="color: #ffffff;">←</span></button>
+</a>
+</div>
+<h1 align="center" style="color:#fff;float:left;margin-left:700px;">新增用户显示地图</h1>
+<div class="usermap" style="width:100%;text-align:center;">
+  <img src="../../static/myechartsite/img/homebg.jpg" alt="usermap" align="center" style="width:1500px;height:1000px;">
+</div>
+
+
+
+
+
+{% endblock %}

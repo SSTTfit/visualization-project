@@ -1,0 +1,61 @@
+{% extends 'myechartsite/base_show.html' %}
+{% load staticfiles %}
+{% block title %}疾病与地域{% endblock %}
+{% block css %}
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<link href="{% static 'myechartsite/css/arearatiomapcss.css' %}" rel="stylesheet"/>
+
+
+{% endblock %}
+{% block kind %}疾病与地域{% endblock %}
+{% block leftsidebar %}
+    <div class="btn-group-vertical" role="group" id="lbtngp" aria-label="类型">
+      <button type="button" class="btn btn-default  btn-block unshow" onclick="jump('{% url 'myechartsite:diseage' %}')">疾病与年龄</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disegender' %}')">疾病与性别</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disewheather' %}')">疾病与天气</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disetemp' %}')">疾病与温度</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:diseyear' %}')">疾病与年份</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disemonth' %}')">疾病与月份</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:diseaqi' %}')">与空气质量</button>
+      <button type="button" class="btn show" >疾病与地域</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:arearatiochange' %}')">发病率变化</button>
+    </div>
+
+{% endblock %}
+{% block chart %}
+            <div id="sign" style="height: 50px;width: 400px" >
+                <p><span id="year_span" style="color: #b558f6;margin-right: 5px">2019年</span>|<span id="disease_span" style="color: #b558f6;margin-left: 5px">急性/慢性肾炎</span>与地域的分布关系</p>
+            </div>
+            <iframe id="main" name="mapframe" src="../../static/myechartsite/maps/map1.html" frameborder="0" scrolling="auto"></iframe>
+{% endblock %}
+{% block rightsidebar %}
+                    <div class="choose">
+                        <div class="row head">
+                            <span style="font-size: 20px;">选择疾病类型</span>
+                        </div>
+                        <div class="choose_1">
+                            <form id="disease_choose">
+                            </form>
+                        </div>
+                    </div>
+                    <div id="separator" style="width: 100%;height: 1px;background: #ebedf4"></div>
+                    <div class="choose">
+                        <div class="row head">
+                            <span style="font-size: 20px;">年份筛选</span>
+                        </div>
+                        <div class="choose_1" id="year_choose">
+                            <div id="left_col"></div>
+                            <div id="right_col" style="position: absolute;left: 137px;top: 0px;"></div>
+                        </div>
+                    </div>
+{% endblock %}
+{% block js%}
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<script src="{% static 'myechartsite/js/arearatiomap.js' %}"></script>
+<script>
+    function jump(url){
+        window.location.href=url;
+    }
+</script>
+{% endblock %}

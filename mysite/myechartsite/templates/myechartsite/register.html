@@ -1,59 +1,140 @@
-{% extends 'myechartsite/base.html' %}
+ {% extends 'myechartsite/base.html' %}
 {% load staticfiles %}
 {% block title %}注册{% endblock %}
-<!-- {% block css %}<link href="{% static 'myechartsite/register.css' %}" rel="stylesheet"/>{% endblock %} -->
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'myechartsite/css/city-select.css' %}">
+<link href="{% static 'myechartsite/css/register.css' %}" rel="stylesheet"/>
+{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="col-md-4 col-md-offset-4">
-          <form class='form-register' action="{% url 'myechartsite:register' %}" method="post">
-
+<div class="container-fluid" style="">
+<h1 class='form-title' align=center>普泽医疗大数据系统</h1>
+    <div class="formbg" id="container1" style="">
+      <div class="row">
+        <div class="col-md-7 col-sm-7 col-xs-7" id="col1" >
+          <div class="col-md-4 col-sm-4 col-xs-4" style="text-align:center;">
+            <div class="llogo" style = "">
+            <img src="{% static 'myechartsite/img/reglogo1.png' %}" alt="logo1"  class="" style="margin-top:10px;height:30px;" >
+            </div>
+            <div class="ltext" style="">
+            <p style="font-size:16px;margin-bottom:5px;">个人账户</p>
+              <p>体检数据</p>
+              <p>寻医问药</p>
+              <p>医疗咨询</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4" style="text-align:center;">
+            <div class="llogo" style = "">
+            <!-- <img src="{% static 'myechartsite/img/reglogo1.png' %}" alt="logo1"  class="" style="margin-top:10px;height:30px;" > -->
+            </div>
+            <div class="ltext" style="">
+            <p style="font-size:16px;margin-bottom:5px;">专科医生</p>
+              <p>疾病与检测指标</p>
+              <p>大数据</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-4 col-xs-4" style="text-align:center;">
+            <div class="llogo" style = "text-align:left;">
+            <!-- <img src="{% static 'myechartsite/img/reglogo1.png' %}" alt="logo1"  class="" style="margin-top:10px;height:30px;" > -->
+            </div>
+            <div class="ltext" style="">
+            <p style="font-size:16px;margin-bottom:5px;">疾控专家</p>
+              <p>疾病多维度</p>
+              <p>大数据</p>
+            </div>
+          </div>
+        </div>
+          <div class="col-md-5 col-sm-5 col-xs-5">
+            <div class="rform" style="width:92%;margin-top:70px;">
+{% csrf_token %}
+            <form class='form-register' action="{% url 'myechartsite:register' %}" method="post" style=";">
               {% if message %}
-                  <div class="alert alert-warning">{{ message }}</div>
+              <div class="alert alert-warning">{{ message }}</div>
               {% endif %}
               {% csrf_token %}
-              <h2 class="text-center">欢迎注册</h2>
-              <div class="form-group">
+              <div class="row" style="margin-top:40px;">
+                <div class="form-group col-md-6 col-sm-6 col-xs-6">
                   {{ register_form.username.label_tag }}
                   {{ register_form.username}}
-              </div>
-            <!--   <div class="form-group">
-                <select name="" id="" class="form-control">
-                  <option value="customer">customer</option>
-                  <option value="doctor">doctor</option>
-                  <option value="expert">expert</option>
-                  
+                </div>
+                <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                {{ register_form.level.label_tag }}<br />
+                <select name="level" id="id_level">
+                  <option class="option1" value="" disabled selected hidden>选择用户类型</option>
+                  <option class="option2" value="customer">个人用户</option>
+                  <option class="option2" value="doctor">专科医生</option>
+                  <option class="option2" value="expert">疾控专家</option>
                 </select>
-              </div> -->
-              <div class="form-group">
-                  {{ register_form.level.label_tag }}
-                  {{ register_form.level}}
-              </div>
-              <div class="form-group">
-                  {{ register_form.password1.label_tag }}
-                  {{ register_form.password1 }}
-              </div>
-              <div class="form-group">
-                  {{ register_form.password2.label_tag }}
-                  {{ register_form.password2 }}
-              </div>
-              <div class="form-group">
-                  {{ register_form.email.label_tag }}
-                  {{ register_form.email }}
-              </div>
-              <div class="form-group">
+                <!-- {{ register_form.level}} -->
+                </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6 col-sm-6 col-xs-6" style="">
+                    {{ register_form.email.label_tag }}
+                    {{ register_form.email }}
+                  </div>
+                  <div class="form-group col-md-6 col-sm-6 col-xs-6" style="">
+                    {{ register_form.location.label_tag }}<br />
+                    <input type="hidden" id="location" name="location" />
+                    <div class="city-select" id="single-select-1" style="width:233px;"></div>
+                    <!-- <select name="location" id=''>
+                      <option class="option1" value="" disabled selected hidden>选择所在地</option>
+                      <option class="option2" value="北京">北京</option>
+
+                      <option class="" value="" disabled>河北省</option>
+
+                      <option class="option2" value="石家庄" style="">石家庄</option>
+                    </select> -->
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="form-group col-md-6 col-sm-6 col-xs-6">
+                    {{ register_form.password1.label_tag }}
+                    {{ register_form.password1 }}
+                  </div>
+                  <div class="form-group col-md-6 col-sm-6 col-xs-6 " style="">
+                    {{ register_form.password2.label_tag }}
+                    {{ register_form.password2 }}
+                  </div>
+                </div>
+              <!-- <div class="form-group">
                   {{ register_form.sex.label_tag }}
                   {{ register_form.sex }}
-              </div>
+              </div> -->
              <!--  <div class="form-group">
                   {{ register_form.captcha.errors }}
                   {{ register_form.captcha.label_tag }}
                   {{ register_form.captcha }}
               </div> -->
 
-              <button type="reset" class="btn btn-default pull-left">重置</button>
-              <button type="submit" class="btn btn-primary pull-right">提交</button>
+              <button type="submit" class="btn btn-block btn-lg">提交</button>
+            </form>
 
-          </form>
+          </div> <!-- /container -->
+</div>
         </div>
-    </div> <!-- /container -->
+  </div>
+  </div>
+  <script src="https://cdn.bootcss.com/jquery/1.8.1/jquery.js"></script>
+  <script type="text/javascript" src="{% static 'myechartsite/js/citydata.js' %}"></script>
+  <script type="text/javascript" src="{% static 'myechartsite/js/citySelect-1.0.3.js' %}"></script>
+  <script type="text/javascript">
+  var singleSelect1 = $('#single-select-1').citySelect({
+  		dataJson: cityData,     //数据源
+  		multiSelect: false,     //单选
+  		shorthand: true,        //简称
+  		search: false,           //搜索
+  		onInit: function () {   //初始化回调
+  			console.log(this)
+  		},
+  		onTabsAfter: function (target) {    //切换tab回调
+  			console.log(target)
+  		},
+  		onCallerAfter: function (target, values) {  //选择后回调
+  			console.log(JSON.stringify(values));
+        $('#location').val(values['name'])
+        
+  		}
+  	});
+    singleSelect1.setCityVal('北京市');
+    </script>
 {% endblock %}

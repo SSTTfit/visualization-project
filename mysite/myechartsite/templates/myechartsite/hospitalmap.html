@@ -1,0 +1,39 @@
+{% extends 'myechartsite/base_show.html' %}
+{% load staticfiles %}
+{% block title %}全国医院分布图{% endblock %}
+{% block css %}
+<link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+<link href="{% static 'myechartsite/css/hospitalmapcss.css' %}" rel="stylesheet"/>
+{% endblock %}
+{% block kind %}{% endblock %}
+{% block leftsidebar %}
+
+{% endblock %}
+{% block chart %}
+
+
+
+
+
+    <iframe id="main" name="mapframe" src="{% static 'myechartsite/maps/map2.html' %}" frameborder="0" scrolling="auto"></iframe>
+
+{% endblock %}
+{% block rightsidebar %}
+            <div class="choose">
+                <div class="row head">
+                    <span style="font-size: 20px;">寻医问药</span>
+                </div>
+                <div class="choose_1">
+                    <select id="province"><option value="all">省份</option></select>
+                    <select id="city"><option value="all">城市</option></select>
+                    <select id="level"><option value="all">等级</option></select>
+                    <select id="features"><option value="all">特色专科</option></select>
+                </div>
+            </div>
+
+{% endblock %}
+{% block js%}
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+<script src="{% static 'myechartsite/js/hospitalmap.js' %}"></script>
+{% endblock %}

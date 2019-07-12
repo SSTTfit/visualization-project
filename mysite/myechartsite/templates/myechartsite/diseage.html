@@ -1,0 +1,110 @@
+{% extends 'myechartsite/base_show.html' %}
+{% load staticfiles %}
+{% block title %}饼图{% endblock %}
+{% block css %}
+<link href="{% static 'myechartsite/css/diseage_trend_year.css' %}" rel="stylesheet"/>
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'myechartsite/js/diseagejs.js' %}"></script>{% endblock %}
+{% block kind %}疾病与年龄{% endblock %}
+
+{% block leftsidebar %}
+    <div class="btn-group-vertical" role="group" id="lbtngp" aria-label="类型">
+      <button type="button" class="btn show">疾病与年龄</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disegender' %}')">疾病与性别</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disewheather' %}')">疾病与天气</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disetemp' %}')">疾病与温度</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:diseyear' %}')">疾病与年份</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disemonth' %}')">疾病与月份</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:diseaqi' %}')">与空气质量</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:arearatiomap' %}')">疾病与地域</button>
+      <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:arearatiochange' %}')">发病率变化</button>
+    </div>
+{% endblock %}
+{% block chart %}
+<div class="row" style="margin-left:0;">
+    <div class="text-center s1">
+        <label style="color: #b558f6; font-size: large; margin-top: 6px;" id="year1">2018年</label>
+        <label style="color: #d3d3d3; font-size: large; margin-top: 6px;font-size: x-large">|</label>
+        <label style="color: #b558f6; font-size: large; margin-top: 6px;width: auto"id="disease1">急慢性肾炎</label>
+        <label style="font-size: large; position: center; color: #9b9b9b">与年龄段的分布关系</label>
+    </div>
+</div>
+<div class="row s2">
+    <div id="main4" style="width: 80em;height:700px;float:left; margin-top: 0;margin-left: 9%;">
+        <!--细化疾病与年龄的关系展示-->
+        <script type="text/javascript">
+            var myChart2 = echarts.init(document.getElementById('main4'));
+            myChart2.setOption(option4);
+        </script>
+    </div>
+</div>
+{% endblock %}
+{% block rightsidebar %}
+<div class="row">
+    <div class="col-md-6">
+        <label for="" style="font-size: 20px;margin-top: 22px;margin-left: 24px">选择疾病类型</label>
+    </div>
+    <div class="col-md-6" style="float: right;margin-top: 22px;">
+
+        <label for="" style="color: #b558f6;float: right;margin-right: 20%;">●</label>
+        <label for="" style="float: right;margin-right: 5%;" id="disease2">急慢性肾炎 </label>
+
+    </div>
+</div>
+<div class="pre-scrollable s3 scroll1" style="overflow:auto;overflow-x:hidden;">
+    <form style="margin-left:25px;margin-top:10px;">
+        <input type="radio" id="sy" value="sy" name="disease" checked="checked" onclick="changeRadio(this)"><label for="sy" class="s3_label">急慢性肾炎</label>
+        <br>
+        <input type="radio" id="sysy" value="sysy" name="disease" onclick="changeRadio(this)"><label for="sysy" class="s3_label">肾盂肾炎</label>
+        <br>
+        <input type="radio" id="pgy" value="pgy"name="disease" onclick="changeRadio(this)"><label for="pgy" class="s3_label">膀胱炎</label>
+        <br>
+        <input type="radio" id="ndy" value="ndy" name="disease" onclick="changeRadio(this)"><label for="ndy" class="s3_label">尿道炎</label>
+        <br>
+        <input type="radio" id="ndjh" value="ndjh" name="disease" onclick="changeRadio(this)"><label for="ndjh" class="s3_label">尿道结核</label>
+        <br>
+        <input type="radio" id="rxxhd" value="rxxhd" name="disease" onclick="changeRadio(this)"><label for="rxxhd" class="s3_label">溶血性黄疸</label>
+    </form>
+</div>
+<br>
+<hr style="margin-top:10px;margin-bottom: 0">
+<div class="center-block" style="height:300px;margin-top: 0">
+    <div class="row">
+        <div class="col-md-6">
+            <label for="" style="font-size: 20px;margin-top: 22px;margin-left: 24px">年份筛选</label>
+        </div>
+        <div class="col-md-6">
+            <label for="" style="margin-top: 22px;    margin-left: 80px;" id="year2">2018 </label>
+                <label for="" style="color: #b558f6">●</label>
+        </div>
+    </div>
+    <div style="margin-left: 10%; overflow:auto; height: 200px;" class="s4 scroll1">
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2019" onclick="btnclick(this)">2019</button>
+        <button type="button" name="button" class="btn btn-lg btn-year" autofocus="true" id="2018" onclick="btnclick(this)">2018</button>
+        <br>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2017" onclick="btnclick(this)">2017</button>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2016" onclick="btnclick(this)">2016</button>
+        <br>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2015" onclick="btnclick(this)">2015</button>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2014" onclick="btnclick(this)">2014</button>
+        <br>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2013" onclick="btnclick(this)">2013</button>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2012" onclick="btnclick(this)">2012</button>
+        <br>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2011" onclick="btnclick(this)">2011</button>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2010" onclick="btnclick(this)">2010</button>
+        <br>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2009" onclick="btnclick(this)">2009</button>
+        <button type="button" name="button" class="btn btn-lg btn-year" id="2008" onclick="btnclick(this)">2008</button>
+    </div>
+</div>
+{% endblock %}
+{% block js%}
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script>
+    function jump(url){
+        window.location.href=url;
+    }
+</script>
+
+{% endblock %}

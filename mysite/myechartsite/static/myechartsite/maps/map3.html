@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MAP-extrusion</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {margin: 0;padding: 0;
+        }
+        #map {position: absolute;top: 0;bottom: 0;width: 100%;
+        }
+    </style>
+</head>
+<body>
+<style>
+    .map-overlay {
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        position: absolute;
+        width: 25%;
+        bottom: 10px;
+        right: 0;
+        padding: 10px;
+    }
+
+    .map-overlay .map-overlay-inner {
+        background-color: #fff;
+        box-shadow:0 1px 2px rgba(0, 0, 0, 0.20);
+        border-radius: 3px;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+
+    .legend {
+        height: 40px;
+        width: 100%;
+    }
+    .bar {
+        height: 10px;
+        width: 100%;
+        background: linear-gradient(to right, #4374EF, #FFF,#FF4A14);
+    }
+
+</style>
+<div id="map"></div>
+<div class='map-overlay'>
+    <div class='map-overlay-inner'>
+        <div id='legend' class='legend'>
+            <div>Morbidity change from 2016</div>
+            <div class='bar'></div>
+            <div id="min" style="float: left;">-10%</div>
+            <div id="max" style="float: right">10%</div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function filterBy(disease,year){
+        var change1=[
+            "interpolate",
+            ["linear"],
+            ["get", disease+"_"+year],
+            0,
+            4000,
+            10,
+            100000
+        ];
+        var change2 =[
+            'interpolate',['linear'],
+            ['-',['get',disease+"_"+year],['get',disease+'_2016']],
+            -10,
+            '#4374EF',
+            0,
+            "#FFF",
+            10,
+            "#FF4A14"
+        ];
+        map.setPaintProperty('disease_year_map','fill-extrusion-height',change1);
+        map.setPaintProperty('disease_year_map','fill-extrusion-color',change2)
+    }
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWd5cHRsIiwiYSI6ImNqcDI3eGR2YjAyY2Mza3J0MnVxcDBleXEifQ.G5rT-P_uHSS1U7v-nuquMg';
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/agyptl/cjuaxkwu718ff1fmte23ld0ca', // stylesheet location
+        center: [103.000,35.000], // starting position [lng, lat]
+        minZoom: 3.41,// starting zoom
+        maxZoom: 6,
+        zoom:4,
+        pitch:40
+    });
+   // var adminLayers = ['admin-country-disputed', 'admin-country'];
+
+    map.on('load', function() {
+        map.addSource('disease_map_source_plus',{
+            type: 'vector',
+            url: 'mapbox://agyptl.1qq8dfmk'
+        });
+        map.addLayer({
+            "id": 'disease_year_map',
+            "type": 'fill-extrusion',
+            "source": 'disease_map_source_plus',
+            'source-layer': 'China_year_disease-0uzwhk',
+            //调整颜色，依据2018年肾炎的发病率分布显示
+            "paint":{
+                "fill-extrusion-base": 0,
+                "fill-extrusion-height":[
+                    "interpolate",
+                    ["linear"],
+                    ["get", "nephritis_2018"],
+                    0,
+                    4000,
+                    10,
+                    100000
+                ],
+                'fill-extrusion-color':[
+                    'interpolate',['linear'],
+                    ['-',['get','nephritis_2018'],['get','nephritis_2016']],
+                    -10,
+                    '#4374EF',
+                    0,
+                    "#FFF",
+                    10,
+                    "#FF4A14"
+                ],
+                //'fill-extrusion-opacity':0.8
+            }
+        },'water');
+        //设置语言
+       // map.setLayoutProperty('country-label', 'text-field', ['get', 'name_zh-Hans']);
+       // map.setLayoutProperty('place-city-label','visibility','none');
+        //设置国界
+        /*adminLayers.forEach(function(adminLayer) {
+            map.setFilter(adminLayer, ["match", ["get", "worldview"], ["all", 'CN'], true, false]);});*/
+    });
+</script>
+</html>

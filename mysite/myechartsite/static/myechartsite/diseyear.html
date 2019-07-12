@@ -1,0 +1,44 @@
+{% extends 'myechartsite/base_show.html' %}
+{% load staticfiles %}
+{% block title %}堆叠折线图{% endblock %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'myechartsite/diseage_trend_year.css' %}">
+<link rel="stylesheet" href="{% static 'myechartsite/diseyearcss.css' %}">
+<script src="{% static 'myechartsite/diseyearjs.' %}"></script>
+{% endblock %}
+{% block kind %}疾病与年份{% endblock %}
+
+{% block leftsidebar %}
+    <div class="btn-group-vertical" role="group" id="lbtngp" aria-label="类型">
+      <button type="button" class="btn btn-default  btn-block unshow">疾病与年龄</button>
+      <button type="button" class="btn btn-default unshow">疾病与性别</button>
+      <button type="button" class="btn show">疾病与环境</button>
+      <button type="button" class="btn btn-default unshow">疾病与地域</button>
+    </div>
+{% endblock %}
+{% block chart %}
+<div class="row" style="background:#f5f6fa ">
+    <div class="text-center s1">
+        <label style="color: #b558f6; font-size: large; margin-top: 4%;" id="year1">2018年</label>
+        <label style="color: #d3d3d3; font-size: large; margin-top: 4%;font-size: x-large">|</label>
+        <label style="color: #b558f6; font-size: large; margin-top: 4%;width: auto"id="disease1">急慢性肾炎</label>
+        <label style="font-size: large; position: center; color: #9b9b9b">与年龄段的分布关系</label>
+    </div>
+</div>
+<div class="row s2">
+    <div id="jibingyunianfen" style="width: 80em;height:700px;float:left; margin-top: 0;margin-left: 9%;">
+        <!--细化疾病与年龄的关系展示-->
+        <script type="text/javascript">
+            var myChartNian = echarts.init(document.getElementById('jibingyunianfen'));
+            myChartNian.setOption(optionJibingyunianfen);
+        </script>
+    </div>
+</div>
+{% endblock %}
+{% block rightsidebar %}
+
+{% endblock %}
+{% block js%}
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+
+{% endblock %}

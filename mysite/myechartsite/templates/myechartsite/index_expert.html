@@ -1,0 +1,77 @@
+{% extends 'myechartsite/base_index_expert.html' %}
+{% load staticfiles %}
+{% block title %}专家版索引{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/index_expertcss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}{% endblock %}
+
+{% block chart %}
+<!-- <div class="scroll1" style="height:870px;margin-right:-50px;margin-top:30px;"> -->
+<div class="col-sm-6 col-md-6 col-lg-6">
+    <div class="row kuai" style="">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">疾病与年龄</label>
+        </div>
+        <a href="{% url 'myechartsite:diseage' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/diseage.png" alt=""  width="426px" height="290px"></a>
+    </div>
+    <div class="row kuai">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">疾病与天气</label>
+        </div>
+        <a href="{% url 'myechartsite:disewheather' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/disewheather.png" alt=""  width="426px" height="290px"></a>
+    </div>
+    <div class="row kuai">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">疾病与年份</label>
+        </div>
+        <a href="{% url 'myechartsite:diseyear' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/diseyear.png" alt=""  width="426px" height="290px"></a>
+    </div>
+    <div class="row kuai">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">疾病与空气质量</label>
+        </div>
+        <a href="{% url 'myechartsite:diseaqi' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/diseaqi.png" alt=""  width="426px" height="290px"></a>
+    </div>
+    <div class="row kuai">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">发病率增减与地域</label>
+        </div>
+        <a href="{% url 'myechartsite:arearatiochange' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/map1.png" alt="map1" width="426px" height="290px"></a>
+    </div>
+</div>
+<div class="col-sm-6 col-md-6 col-lg-6">
+    <div class="row kuai">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">疾病与性别</label>
+        </div>
+        <a href="{% url 'myechartsite:disegender' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/disegender.png" alt=""  width="426px" height="290px"></a>
+    </div>
+    <div class="row kuai">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">疾病与温度</label>
+        </div>
+        <a href="{% url 'myechartsite:disetemp' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/disetemp.png" alt=""  width="426px" height="290px"></a>
+    </div>
+    <div class="row kuai">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">疾病与月份</label>
+        </div>
+        <a href="{% url 'myechartsite:disemonth' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/disemonth.png" alt=""  width="426px" height="290px"></a>
+    </div>
+    <div class="row kuai">
+        <div class="biaoqian">
+            <label style="color: #b558f6; font-size: large; margin-top: 4%;">发病率与地域</label>
+        </div>
+        <a href="{% url 'myechartsite:arearatiomap' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/map2.png" alt="map2"  width="426px" height="290px"></a>
+    </div>
+</div>
+<!-- </div> -->
+{% endblock %}
+
+{% block rightsidebar %}
+<div class="row" style="margin-right:0;min-height:1700px;">
+    <img src="../../static/myechartsite/img/navlogo.png" alt="" style="margin-left: 20%;margin-top: 50%;">
+</div>
+{% endblock %}
+{% block js%}
+
+{% endblock %}

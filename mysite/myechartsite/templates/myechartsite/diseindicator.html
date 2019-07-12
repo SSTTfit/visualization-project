@@ -1,67 +1,293 @@
+{% extends 'myechartsite/base_show.html' %}
 {% load staticfiles %}
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>ECharts</title>
-    <!-- 引入 echarts.js -->
-    <script src="{% static 'echarts.js'%}"></script>
-    <script src="{% static 'jquery-3.3.1.js'%}"></script>
-</head>
-<body>
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-    <div id="main" style="width: 600px;height:400px;"></div>
+{% block title %}玫瑰图{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/diseindicatorcss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}疾病与异常指标{% endblock %}
+
+{% block leftsidebar %}
+
+          <div class="btn-group-vertical" role="group" id="lbtngp" aria-label="类型">
+            <button type="button" class="btn  show">与异常指标</button>
+          </div>
+{% endblock %}
+{% block chart %}
+          <div id="main" style=""></div>
+{% endblock %}
+{% block rightsidebar %}
+
+          <div class="disechoose">
+            <div h2 class="btntitle">选择疾病类型</div>
+            <div class="rbtngroup1">
+            <div class="btn-group-vertical scroll1" role="group" aria-label="选择疾病类型" id="rbtn1" >
+              <button type="submit" id="sy" class="btn rbtnact" onclick="choosedise(this,'rbtnact',2,'肾炎')" style="margin-top:10px;">肾炎</button>
+              <button type="submit" id="pgy" class="btn rbtnact" onclick="choosedise(this,'rbtnact',4,'膀胱炎')">膀胱炎</button>
+              <button type="button" id="nsz" class="btn rbtnact" onclick="choosedise(this,'rbtnact',3,'尿石症')">尿石症</button>
+              <button type="button" id="tnb" class="btn rbtnact" onclick="choosedise(this,'rbtnact',6,'糖尿病')">糖尿病</button>
+              <button type="button" id="sjs" class="btn rbtnact" onclick="choosedise(this,'rbtnact',5,'肾结石')">肾结石</button>
+              <button type="button" id="hhd" class="btn rbtnact" onclick="choosedise(this,'rbtnact',1,'核黄疸')">核黄疸</button>
+              <button type="button" id="rsgxy" class="btn rbtnact" onclick="choosedise(this,'rbtnact',0,'妊娠高血压')">妊娠高血压</button>
+            </div>
+            </div>
+          </div>
+          <div class="yearchoose">
+            <div h2 class="btntitle">指标选择</div>
+            <div class="rbtngroup2">
+              <div class="btn-toolbar scroll2" role="toolbar" aria-label="选择指标">
+                <div class="btn-group-vertical " role="group" aria-label="选择指标" id="rbtn2" style="" >
+                  <button type="button" class="btn rbtnact1" onclick="chooseindi(this,'rbtnact1',0)">尿蛋白</button>
+                  <button type="button" class="btn rbtnact3" onclick="chooseindi(this,'rbtnact3',2)">肌酐</button>
+                  <button type="button" class="btn rbtnact5" onclick="chooseindi(this,'rbtnact5',4)">尿比重</button>
+                  <button type="button" class="btn rbtnact7" onclick="chooseindi(this,'rbtnact2',6)">亚硝酸盐</button>
+                </div>
+                <div class="btn-group-vertical" role="group" aria-label="选择年份" id="rbtn3" style="margin-left: 30px;">
+                  <button type="button" class="btn rbtnact2" onclick="chooseindi(this,'rbtnact2',1)">尿ph</button>
+                  <button type="button" class="btn rbtnact4" onclick="chooseindi(this,'rbtnact4',3)">钙</button>
+                  <button type="button" class="btn rbtnact6" onclick="chooseindi(this,'rbtnact1',5)">胆红素</button>
+                  <button type="button" class="btn rbtnnorm"onclick="">指标</button>
+                </div>
+              </div>
+            </div>
+          </div>
+{% endblock %}
+{% block js%}
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
     <script type="text/javascript">
-        var a = {{ data|safe }};
+        // var r = {{ data|safe }};
+        var diselist = ['妊娠高血压','核黄疸','肾炎','尿石症','膀胱炎','肾结石','糖尿病'];
+        var indilist = ['ndb','nph','jg','g','nbz','dhs','yxsy'];
+        var indilist_c=['尿蛋白','尿ph','肌酐','钙','尿比重','胆红素','亚硝酸盐']
+        var p = new Array();
+        var k = new Array();
+        for (var j=0;j<diselist.length;j++){
+          p[j]=1
+        };
+        for (var j=0;j<indilist.length;j++){
+          k[j]=1
+        };
         var myChart = echarts.init(document.getElementById('main'));
         var option = {
-        	angleAxis: {
-        type: 'category',
-        data: ['疾病1', '疾病2', '疾病3', '疾病4'],
-        z: 10
-    },
-    radiusAxis: {
-    },
-    polar: {
-    },
-    series: [{
-        type: 'bar',
-        data: a.zhibiao1,
-        coordinateSystem: 'polar',
-        name: 'A',
-        stack: 'a'
-    }, {
-        type: 'bar',
-        data: a.zhibiao2,
-        coordinateSystem: 'polar',
-        name: 'B',
-        stack: 'a'
-    }, {
-        type: 'bar',
-        data: a.zhibiao3,
-        coordinateSystem: 'polar',
-        name: 'C',
-        stack: 'a'
-    }, {
-        type: 'bar',
-        data: a.zhibiao4,
-        coordinateSystem: 'polar',
-        name: 'D',
-        stack: 'a'
-    }],
-    legend: {
-        show: true,
-        data: ['A', 'B', 'C','D']
-    }
-};
+            angleAxis: {
+                type: 'category',
+                data: ['妊娠高血压','核黄疸','肾炎','尿石症','膀胱炎','肾结石','糖尿病'],
+                axisLabel:{
+                  color:'#999',
+                  margin:20,
+                  fontSize:18
+                },
+                axisLine: {
+                  lineStyle: {
+                    color: '#999',
+                    width:1
+                  }
+                },
+                axisTick:{
+                  lineStyle: {
+                    color: '#999',
+                    width:2,
+                  },
+                length:7
+                },
+                z: 10
+            },
+            color: ['rgb(181, 88, 246)', 'rgb(69, 120, 239)', 'rgb(41, 203, 151)', 'rgb(255, 119, 119)', 'rgb(255, 216, 57)','rgb(124, 181, 236)','rgb(247, 163, 92)'],
+            tooltip:{
+              formatter:'{a}:{c}%',
+            },
+            radiusAxis: {
+              axisLabel: {
+                show:false
+            },
+            axisLine: {
+              show:false
+            },
+            axisTick: {
+            show: false
+            }
+            },
+            polar: {
+            },
+            series: [{
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: '',
+                stack: 'a',
+                itemStyle: {
+                  normal: {
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                  },
+                  emphasis: {
+                    borderWidth: 0,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                  }
+                }
+              },
+              {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'B',
+                stack: 'a',
+                itemStyle: {
+                  normal: {
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                  },
+                  emphasis: {
+                    borderWidth: 0,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                  }
+              },
+              {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'C',
+                stack: 'a',
+                itemStyle: {
+                  normal: {
+                      borderWidth: 3,
+                      borderColor: '#ffffff',
+                  },
+                  emphasis: {
+                      borderWidth: 0,
+                      shadowBlur: 10,
+                      shadowOffsetX: 0,
+                      shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                      }
+                    },
+              {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'd',
+                stack: 'a',
+                itemStyle: {
+                normal: {
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                },
+                emphasis: {
+                    borderWidth: 0,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                      }
+                  }
+              },
+            {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'e',
+                stack: 'a',
+                itemStyle: {
+                normal: {
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                },
+                emphasis: {
+                    borderWidth: 0,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                  }
+              },
+            {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'f',
+                stack: 'a',
+                itemStyle: {
+                normal: {
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                  },
+                emphasis: {
+                    borderWidth: 0,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                  }
+            },
+            {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'g',
+                stack: 'a',
+                itemStyle: {
+                normal: {
+                    borderWidth: 3,
+                    borderColor: '#ffffff',
+                },
+                emphasis: {
+                    borderWidth: 0,
+                    shadowBlur: 10,
+                    shadowOffsetX: 0,
+                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                }
+              }
+            }]
+          };
 
 
 
+      $(document).ready(function(){
+        $.getJSON('/myechartsite/index_doctor/diseindicator_data',function(ret){
+          data = ret;
+          for(var i=0;i<indilist_c.length;i++){
+            option.series[i].name=indilist_c[i];
+          };
+          datarefresh();
+        myChart.setOption(option,true);
+        })
+      });
 
 
-
-
-        myChart.setOption(option)
+      function cleandata(){
+        option.angleAxis.data=[]
+        for(var i=0;i<indilist.length;i++){
+           option.series[i].data=[]
+        }
+      };
+      function datarefresh(){
+        cleandata();
+        for(var i=0;i<diselist.length;i++){
+          if (p[i]==1)
+          {
+            option.angleAxis.data.push(diselist[i]);
+            for (var j=0;j<indilist.length;j++){
+              if (k[j]==1){
+                option.series[j].data.push(data[indilist[j]][i]);
+              }
+            };
+          }
+          }
+      };
+      function choosedise(a,css,n,indi){
+        $(a).toggleClass("rbtnnorm");
+         $(a).toggleClass(css);
+         p[n] = !p[n];
+         datarefresh();
+         myChart.setOption(option,true)
+       };
+       function chooseindi(a,css,n){
+         $(a).toggleClass("rbtnnorm");
+          $(a).toggleClass(css);
+          k[n] = !k[n];
+          datarefresh();
+          myChart.setOption(option,true)
+       };
     </script>
-</body>
-</html>
+{% endblock %}

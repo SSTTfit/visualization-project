@@ -1,0 +1,235 @@
+
+/* 左侧按钮组 */
+#lbtngp{
+  margin-top:80px;
+  width:123px;
+}
+#lbtngp button{
+  border: 0px;
+  font-size: 18px;
+  height: 55px;
+  border-radius: 5px;
+  margin-right: -4px;
+  z-index: 10;
+  outline:none;
+}
+.unshow{
+  color:#8a8a8a;
+}
+.show{
+  color:#ffffff;
+  background: linear-gradient(to top , rgb(65,115,238),rgb(98,151,245));
+  opacity: 0.9;
+}
+
+.ctitle{
+    border-Radius:30px;
+    box-shadow: 2px 2px 2px 2px #888888;
+    height:50px;
+    width: 400px;
+    background-color:#fff;
+    margin-left: 50px;
+    margin-top: 27px;
+    text-align: center;
+}
+.ctitle label{
+
+  font-weight: 600;
+}
+#main{
+  height:810px;
+  min-height:760px;
+  min-width: 1000px;
+  z-index: 12;
+  /* background-color:#f6f6f6; */
+  /* margin-right: -50px; */
+  margin-left: -20px;
+}
+
+
+/* 右上按钮组 */
+.rbtnact
+{
+  color:#ffffff!important;
+  background-color:rgb(181, 88, 246)!important;
+}
+.rbtnact1
+{
+  color:#ffffff!important;
+  background-color:rgb(181, 88, 246)!important;
+  /* background-image: url(./img/btnc.png); */
+
+}
+.rbtnact1::before , .rbtnact2::before, .rbtnact3::before, .rbtnact4::before, .rbtnact5::before{
+  content: "√";
+  color: #ffffff;
+  display: inline-block;
+  vertical-align: middle;
+  width: 17px;
+  height: 17px;
+  float:left;
+  margin-left: 8px;
+  border: 1px solid #ffffff;
+  border-radius: 50%;
+  background-clip: content-box;
+}
+.rbtnact2
+{
+  color:#ffffff!important;
+  background-color:rgb(69, 120, 239)!important;
+}
+.rbtnact3
+{
+  color:#ffffff!important;
+  background-color:rgb(41, 203, 151)!important;
+}
+.rbtnact4
+{
+  color:#ffffff!important;
+  background-color:rgb(255, 119, 119)!important;
+}
+.rbtnact5
+{
+  color:#ffffff!important;
+  background-color:rgb(255, 216, 57)!important;
+}
+.rbtnnorm{
+  color:#8a8a8a;
+  background-color: rgb(229,233,242);
+  /* background-image: url(./img/btn.png); */
+}
+.rbtnnorm::before{
+  content: "\a0"; /*不换行空格*/
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 18px;
+  width: 17px;
+  height: 17px;
+  float:left;
+  margin-left: 8px;
+  border-radius: 50%;
+  border: 1px solid #b558f6;
+  line-height: 1;
+}
+.rbtnnorm2{
+  color:#8a8a8a;
+  background-color: rgb(229,233,242);
+}
+
+.btntitle{
+  margin-top: 30px;
+  margin-left: 25px;
+  font-size: 20px;
+}
+.disechoose{
+  /* background-color: #fff; */
+  height: 300px;
+}
+
+.rbtngroup1{
+  text-align: center;
+  margin-top: 17px;
+  height: 200px;
+  margin-left: 30px;
+}
+
+
+#rbtn1{
+  text-align: center;
+  width:260px;
+  height: 230px;
+  margin-left: 5px;
+}
+.scroll1{
+  overflow-y: scroll;
+}
+.scroll1::-webkit-scrollbar {
+  width: 8px;
+  /* height: 10px; */
+        }
+.scroll1::-webkit-scrollbar-thumb {
+  background-color: #d4d4d4;
+  border-radius: 10px;
+  /* -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1); */
+}
+.scroll1::-webkit-scrollbar-track {
+  border-radius: 10px;
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0); */
+  background-color: #EDEDED;
+}
+
+#rbtn1 button{
+  margin-top: 7px;
+  outline:none;
+  width: 240px;
+  border-radius:5px;
+  height:30px;
+}
+#rbtn1 button:focus{
+  color:#8a8a8a;
+}
+
+
+.yearchoose{
+  margin-top: 20px;
+  border-top: 2px solid #EDEDED;
+  height: 270px;
+  /* background-color: #fff; */
+}
+
+
+.yshow{
+  margin-top:30px;
+
+}
+.yshow div{
+  float:left;
+}
+.rbtngroup2{
+  margin-top:20px;
+  height:200px;
+  margin-left:20px;
+}
+#rbtn2{
+  margin-left: 25px;
+}
+
+#rbtn2 button{
+  outline:none;
+  border-radius: 5px;
+  margin-top: 8px;
+  width:100px;
+
+}
+#rbtn3{
+  margin-left: 30px;
+}
+
+#rbtn3 button{
+  outline:none;
+  border-radius: 5px;
+  margin-top: 8px;
+  width:100px;
+
+}
+
+.scroll2{
+  height:190px;
+  margin-right: 15px;
+  margin-left: 0px;
+  overflow-y: scroll;
+}
+.scroll2::-webkit-scrollbar {
+  width: 8px;
+  /* height: 10px; */
+        }
+.scroll2::-webkit-scrollbar-thumb {
+  background-color: #d4d4d4;
+  border-radius: 10px;
+  /* -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1); */
+}
+.scroll2::-webkit-scrollbar-track {
+  border-radius: 10px;
+  /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0); */
+  background-color: #EDEDED;
+}

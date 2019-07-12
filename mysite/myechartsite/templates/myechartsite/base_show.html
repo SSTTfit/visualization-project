@@ -1,0 +1,174 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>{% block title %}base{% endblock %}</title>
+    <script src="{% static 'js/echarts.js'%}"></script>
+
+    <link href="{% static 'myechartsite/base_showcss.css' %}" rel="stylesheet">
+    <!-- Bootstrap -->
+    <link href="{% static 'bootstrap-3.3.7-dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    {% block css %}{% endblock %}
+  </head>
+  <body>
+    <nav class="navbar" style="min-width:1700px;">
+      <div class="container-fluid" style="padding-right:0;">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header"style="margin-top:8px;">
+          <a class="navbar-brand" href="{% url 'myechartsite:firstindex' %}" style="padding-top:10px;" ><img src="{% static 'myechartsite/img/homelogo.jpg' %}" alt="homelogo" height="50px;" width="50px;"></a>
+          <a class="navbar-brand" style="margin-left:85px;"><img src="{% static 'myechartsite/img/navlogo.png' %}" alt="logo" ></a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="my-nav" >
+          <ul class="nav navbar-nav" >
+            <li>
+              <h3 class="version"  style="">
+                {% if request.session.is_login %}
+                  {% if request.session.level == "expert" %}
+                    专家版
+                  {% elif request.session.level == "doctor" %}
+                    医生版
+                  {% else %}
+                    个人版
+                  {% endif %}
+                {% else %}
+                  未登录
+                {% endif %}
+              </h3>
+            </li>
+            <li>
+              <h3 class="navlb" >{% block kind %}{% endblock %}</h3>
+            </li>
+          </ul>
+          <!-- <ul class="nav navbar-nav rnav">
+              {% if request.session.is_login %}
+                  <li><a href="#">当前在线：{{ request.session.user_name }}</a></li>
+                  <li><a href="{% url 'myechartsite:logout' %}">登出</a></li>
+                  {% else %}
+                  <li><a href="{% url 'myechartsite:login' %}">登录</a></li>
+                  <li><a href="{% url 'myechartsite:register' %}">注册</a></li>
+              {% endif %}
+          </ul> -->
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+<!-- content part -->
+    <div class="container-fluid" style="padding:0;min-width:1700px;min-height:870px;">
+      <div class="row" style="margin:0px;min-width:900px;min-width:1700px;padding:0;">
+        <div class="col-sm-1 col-md-1  col-lg-1" style="padding:0;min-width:123px;background-color:#f4f5f9;">
+          <div class="lsidebg">
+            {% if request.session.level == "expert" %}
+              <a style="" href="{% url 'myechartsite:index_expert'%}">
+            {% elif request.session.level == "doctor" %}
+              <a style="" href="{% url 'myechartsite:index_doctor'%}">
+            {% else %}
+              <a style="" href="{% url 'myechartsite:index_customer'%}">
+            {% endif %}
+
+            <button type="button"  class="btn" id="backbtn" style=""><span style="color: #ffffff;">←</span></button>
+          </a>
+          {% block leftsidebar %}
+          {% endblock %}
+        </div>
+      </div>
+        <div class="col-sm-8 col-md-8 col-lg-8" style="padding:0px;background-color:#f4f5f9;min-width:1000px;min-height:897px;">
+          {% block chart %}
+          {% endblock %}
+        </div>
+        <div class="col-sm-3 col-md-3 col-lg-3" style="height:897px;padding-left:0;">
+          <div class="row" style="padding:0;margin: 0;min-width:330px;height:100%;background-color:#f4f5f9;">
+            <!-- <div class="col-md-4 col-sm-4 col-lg-3" style="padding:0;background-color:#f4f5f9 ;"></div> -->
+            <div class="col-sm-9 col-sm-offset-3 col-md-9 col-md-offset-3 col-lg-9 col-lg-offset-3" style="padding:0;background-color:#fff;min-width:320px;min-height:897px;height:100%;">
+          <div class="sidebg" style="">
+            <div class="userinfo">
+              <div class="userimg">
+                {% if request.session.level == "expert" %}
+                <img src="{% static 'myechartsite/img/expertavatar.png' %}" alt="用户头像" height="120px" style="margin-left:-50px;">
+                {% elif request.session.level == "doctor" %}
+                <img src="{% static 'myechartsite/img/expertavatar.png' %}" alt="用户头像" height="120px" style="margin-left:-50px;">
+                {% else %}
+                <img src="{% static 'myechartsite/img/useravatar.png' %}" alt="用户头像" height="150px" style="margin-left:-40px;">
+                {% endif %}
+              </div>
+              <div class="userinf">
+                <table>
+                <tr>
+                  <td>{{ request.session.user_name }}</td>
+                  <td>
+                    {% if request.session.level == "expert" %}
+                      专家
+                    {% elif request.session.level == "doctor" %}
+                      医生
+                    {% else %}
+                      个人
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr><td style="padding-top:5px;">{{ request.session.location }}</td></tr>
+              </table>
+              </div>
+              <div class="logout"><a href="{% url 'myechartsite:logout' %}"><img src="{% static 'myechartsite/img/log-out.png' %}" alt="quitlogo" height="25px">
+              </a><br />
+              <div style="margin-top:5px;">退出</div>
+            </div>
+              <div class="whinfo">
+              <div class="row" style="margin-left: 7%;height:82px;margin-right:0;">
+                  <div class="col-sm-3 col-md-3 col-lg-3" style="padding-left: 0;margin-top:10px;">
+                    <img src="{{ winfo.imgurl|safe }}" alt="" height="50" style="margin-left:-5px;margin-top:13px;">
+                  </div>
+                  <div class="col-sm-9 col-md-9 col-lg-9">
+                      <div class="row">
+                          <div class="col-sm-5 col-md-5 col-lg-5 temperature" style="margin-left: 0;padding: 0;">
+                              <div >{{ winfo.tempnow|safe }}</div>
+                              <div >℃</div>
+                          </div>
+                          <div class="col-sm-7 col-md-7 col-lg-7 quality">
+                              <div >AQI:</div>
+                              <div style="margin-left: 3px;">{{ winfo.aqi|safe }}</div>
+                              <div style="margin-left: 5px;">{{ winfo.aqic|safe }}</div>
+                          </div>
+                      </div>
+                      <div class="row wheather" style="">
+                          <div >{{ winfo.tempd|safe }}</div>
+                          <div >℃</div>
+                          <div style="margin-left:5px;">{{ winfo.wheather|safe }}</div>
+                      </div>
+                  </div>
+              </div>
+              </div>
+            </div>
+          {% block rightsidebar %}
+          {% endblock %}
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+    </div>
+    {% block js %}
+    {% endblock %}
+    <!-- <link href="{% static 'myechartsite/navbarcss2.css' %}" rel="stylesheet"> -->
+    <div class="footbar">
+        <div class="footertext" style="margin-left: 200px;width:58%;">2019普泽众康</div>
+        <div class="footertext" style="">FAQ</div>
+        <div class="footertext" style="margin-left:40px;">PRIVACY</div>
+        <div class="footertext" style="margin-left:40px;">TERMS&CONDITONS</div>
+    </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="{% static 'bootstrap-3.3.7-dist/js/bootstrap.min.js' %}"></script>
+  </body>
+</html>

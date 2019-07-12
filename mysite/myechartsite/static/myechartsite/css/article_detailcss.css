@@ -1,0 +1,34 @@
+.indexbg{
+  margin-top: 30px;
+  margin-left: 70px;
+  margin-bottom: 50px;
+  background-color: #fff;
+  min-height:800px;
+}
+.content1{
+  text-align: center;
+}
+.content2{
+  font-size: 20px;
+}
+/* 收藏按钮 */
+.btn.active.focus, .btn.active:focus, .btn.focus, .btn:active.focus, .btn:active:focus, .btn:focus {
+  outline:none;}
+.collectbtn{
+  background: url('../img/collectedbtn.png')no-repeat;
+  width:62px;
+  height:50px;
+  margin-top: 40px;
+  border-radius: 10px;
+}
+.uncollectbtn{
+  background: url('../img/uncollectedbtn.png')no-repeat;
+  width:62px;
+  height:50px;
+  margin-top: 40px;
+  border-radius: 10px;
+}
+/* 文章iframe */
+#articlec{
+
+}

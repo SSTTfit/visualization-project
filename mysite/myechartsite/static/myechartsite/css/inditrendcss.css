@@ -1,0 +1,163 @@
+.zhexianbianhuaqushi{
+    border-Radius:30px;
+    height:50px;
+    width: 200px;
+    background: #fff;
+    margin-left: 35px;
+    margin-top: 27px;
+    box-shadow: 2px 2px 2px 2px #888888;
+
+}
+
+/* 左侧按钮组 */
+#lbtngp{
+  margin-top:80px;
+  width:123px;
+}
+#lbtngp button{
+  border: 0px;
+  font-size: 18px;
+  height: 55px;
+  border-radius: 5px;
+  margin-right: -4px;
+  z-index: 10;
+}
+.unshow{
+  color:#8a8a8a;
+}
+.show{
+  color:#ffffff;
+  background: linear-gradient(to top , rgb(65,115,238),rgb(98,151,245));
+  opacity: 0.9;
+}
+
+/* 右侧栏 */
+.disechoose{
+    /* background-color: #fff; */
+    height: 300px;
+}
+
+.rbtngroup1{
+    text-align: center;
+    margin-top: 18px;
+    height: 200px;
+    margin-left: 30px;
+}
+
+.btntitle{
+    margin-top: 30px;
+    margin-left: 23px;
+    font-size: 20px;
+}
+#rbtn1{
+    text-align: center;
+    width:260px;
+    height: 230px;
+    margin-left: 10px;
+}
+.scroll1{
+    overflow-y: scroll;
+}
+.scroll1::-webkit-scrollbar {
+    width: 8px;
+    /* height: 10px; */
+}
+.scroll1::-webkit-scrollbar-thumb {
+    background-color: #d4d4d4;
+    border-radius: 10px;
+    /* -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1); */
+}
+.scroll1::-webkit-scrollbar-track {
+    border-radius: 10px;
+    /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0); */
+    background-color: #EDEDED;
+}
+
+#rbtn1 button{
+    margin-top: 7px;
+    outline:none;
+    width: 240px;
+    border-radius:5px;
+    height:30px;
+}
+#rbtn1 button:focus{
+    color:#8a8a8a;
+}
+
+.rbtnact1
+{
+    color:#ffffff!important;
+    background-color:rgb(181, 88, 246)!important;
+    /* background-image: url(./img/btnc.png); */
+
+}
+.rbtnact1::before , .rbtnact2::before, .rbtnact3::before, .rbtnact4::before, .rbtnact5::before,.rbtnact6::before,.rbtnact7::before,.rbtnact8::before{
+    content: "√";
+    color: #ffffff;
+    display: inline-block;
+    vertical-align: middle;
+    width: 17px;
+    height: 17px;
+    float:left;
+    margin-left: 8px;
+    border: 1px solid #ffffff;
+    border-radius: 50%;
+    background-clip: content-box;
+}
+.rbtnact2
+{
+    color:#ffffff!important;
+    background-color:rgb(69, 120, 239)!important;
+}
+.rbtnact3
+{
+    color:#ffffff!important;
+    background-color:rgb(41, 203, 151)!important;
+}
+.rbtnact4
+{
+    color:#ffffff!important;
+    background-color:rgb(255, 199, 199)!important;
+}
+.rbtnact5
+{
+    color:#ffffff!important;
+    background-color:rgb(255, 216, 57)!important;
+}
+.rbtnact6
+{
+    color:#ffffff!important;
+    background-color:rgb(227, 95, 23)!important;
+}
+.rbtnact7
+{
+    color:#ffffff!important;
+    background-color:rgb(42, 23, 136)!important;
+}
+.rbtnact8
+{
+    color:#ffffff!important;
+    background-color:rgb(174, 212, 5)!important;
+}
+.rbtnnorm{
+    color:#8a8a8a;
+    background-color: rgb(229,233,242);
+    /* background-image: url(./img/btn.png); */
+}
+.rbtnnorm::before{
+    content: "\a0"; /*不换行空格*/
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    width: 17px;
+    height: 17px;
+    float:left;
+    margin-left: 8px;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    line-height: 1;
+}
+.rbtnnorm2{
+    color:#8a8a8a;
+    background-color: rgb(229,233,242);
+}

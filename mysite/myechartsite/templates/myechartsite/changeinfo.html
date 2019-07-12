@@ -1,0 +1,110 @@
+{% extends 'myechartsite/base_index_expert.html' %}
+{% load staticfiles %}
+{% block title %}注册{% endblock %}
+{% block css %}
+<link href="{% static 'myechartsite/css/changeinfocss.css' %}" rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="{% static 'myechartsite/css/city-select.css' %}">
+{% endblock %}
+{% block chart %}
+   <div class="formbg" id="container1" style="">
+     <form class='form-register' action="{% url 'myechartsite:changeinfo' %}" method="post" style=";">
+
+       {% csrf_token %}
+     <div class="row">
+       <div class="col-md-3 col-sm-3 col-sx-3" style="">
+       <h2 style="margin-top:30px;">个人信息</h2>
+       </div>
+       <div class="col-md-9 col-sm-9 col-sx-9" style="">
+       {% if message %}
+       <div class="alert alert-warning alert1" style="">{{ message }}</div>
+       {% endif %}
+       </div>
+       </div>
+       <div class="row">
+        <div class="col-md-2 col-sm-2 col-xs-2" style="text-align:center;">
+          {% if request.session.level == "expert" %}
+          <img src="{% static 'myechartsite/img/expertavatar.png' %}" alt="用户头像" height="120px" style="">
+          {% elif request.session.level == "doctor" %}
+          <img src="{% static 'myechartsite/img/expertavatar.png' %}" alt="用户头像" height="120px" style="">
+          {% else %}
+          <img src="{% static 'myechartsite/img/useravatar.png' %}" alt="用户头像" height="150px" style="">
+          {% endif %}
+        </div>
+        <div class="col-md-8 col-sm-8 col-xs-8">
+          <div class="row">
+            <div class="form-group col-md-4 col-sm-4 col-xs-4">
+              {{ register_form.username.label_tag }}
+              {{ register_form.username}}
+            </div>
+            </div>
+          <div class="row">
+            <div class="form-group col-md-4 col-sm-4 col-xs-4">
+              {{ register_form.location.label_tag }}<br />
+              <input type="hidden" id="location" name="location" />
+              <div class="city-select" id="single-select-1" style="width:233px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4 col-sm-4 col-sx-4" style="text-align:center;">
+
+        </div>
+    </div>
+    <div class="row">
+      <h2 style="margin-top:30px;">账户信息</h2>
+      <div class="col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-8 col-md-offset-2" style="text-align:center;">
+        <div class="row">
+          {{ register_form.password1.label_tag }}
+          {{ register_form.password1 }}
+        </div>
+        <div class="row">
+          {{ register_form.email.label_tag }}
+          {{ register_form.email }}
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:30px;">
+      <div class="col-md-3  col-md-offset-3 col-sm-3 col-sm-offset-3 col-sx-3 col-md-offset-3" style="text-align:center;">
+
+      <button type="submit" class="btn btn-block btn-lg" style="margin-left:-20px;margin-bottom:30px;background-color:#199df3;">保存</button>
+      </div>
+      <div class="col-md-3 col-sm-3 col-sx-3 " style="text-align:center;">
+        <a href="{% url 'myechartsite:login' %}">
+          <button type="button" class="btn btn-block btn-lg" style="float:left;margin-left:20px;margin-bottom:30px;">取消</button>
+        </a>
+      </div>
+    </div>
+    </form>
+    </div>
+
+
+{% endblock %}
+{% block rightsidebar %}
+<div class="row" style="margin-right:0;">
+    <img src="../../static/myechartsite/img/navlogo.png" alt="" style="margin-left: 20%;margin-top: 50%;">
+</div>
+{% endblock %}
+{% block js %}
+<script src="https://cdn.bootcss.com/jquery/1.8.1/jquery.js"></script>
+<script type="text/javascript" src="{% static 'myechartsite/js/citydata.js' %}"></script>
+<script type="text/javascript" src="{% static 'myechartsite/js/citySelect-1.0.3.js' %}"></script>
+<script type="text/javascript">
+var singleSelect1 = $('#single-select-1').citySelect({
+   dataJson: cityData,     //数据源
+   multiSelect: false,     //单选
+   shorthand: true,        //简称
+   search: false,           //搜索
+   onInit: function () {   //初始化回调
+     console.log(this)
+   },
+   onTabsAfter: function (target) {    //切换tab回调
+     console.log(target)
+   },
+   onCallerAfter: function (target, values) {  //选择后回调
+     console.log(JSON.stringify(values));
+      $('#location').val(values['name'])
+
+   }
+ });
+  singleSelect1.setCityVal('北京市');
+  </script>
+{% endblock %}

@@ -1,0 +1,111 @@
+{% extends 'myechartsite/base_index_expert.html' %}
+{% load staticfiles %}
+{% block title %}文章详细内容展示{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/article_detailcss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}{% endblock %}
+
+{% block chart %}
+<div class="indexbg">
+  <div class="row">
+    <div class="col-md-1 col-sm-1">
+  {% if request.session.level == "expert" %}
+    <a style="" href="{% url 'myechartsite:index_expert'%}">
+  {% elif request.session.level == "doctor" %}
+    <a style="" href="{% url 'myechartsite:index_doctor'%}">
+  {% else %}
+    <a style="" href="{% url 'myechartsite:index_customer'%}">
+  {% endif %}
+  <button type="button"  class="btn" id="backbtn" style=""><span style="color: #ffffff;">←</span></button>
+  </a>
+  </div>
+  <div class="col-md-2 col-md-offset-9 col-sm-2 col-sm-offset-9">
+    <form method="get" style="" action="{% url 'myechartsite:article' article_id %}">
+    {% if collected %}
+    <input type="button"  name="collected"  class="btn collectbtn" onclick="changece(this,{{article_id}})" style=""></input>
+    {% else %}
+    <input type="button" name="collected"  class="btn uncollectbtn" onclick="changece(this,{{article_id}})" style=""></input>
+    {% endif %}
+    </form>
+    </div>
+
+  </div>
+  <!-- <div class="content1">
+    <h1>{{article.title}}</h1>
+     {% if article.imgurl %}
+    <img src="{{article.imgurl}}" alt="article-img" height="400px" width="600px" style="margin-top:10px;margin-bottom:10px;">
+    {% endif %}
+  </div> -->
+  <div class="content2" style="margin-top:10px;width:100%;min-height:800px;">
+    <!-- {% autoescape off %}
+    {{article.contenturl}}
+    {% endautoescape %} -->
+    <iframe id="article" name="article" src="{% static articleurl %}" marginwidth="50" frameborder="0" scrolling="auto" width="100%" height="1100" style="margin-bottom:40px;"></iframe>
+
+
+  </div>
+</div>
+{% endblock %}
+
+{% block rightsidebar %}
+<div class="row" style="margin-right:0;min-height:1170px;">
+    <img src="{% static 'myechartsite/img/navlogo.png' %}" alt="" style="margin-left: 20%;margin-top: 50%;">
+</div>
+{% endblock %}
+{% block js%}
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script>
+  // function getCookie(name) {
+  //     var cookieValue = null;
+  //     if (document.cookie && document.cookie !== '') {
+  //         var cookies = document.cookie.split(';');
+  //         for (var i = 0; i < cookies.length; i++) {
+  //             var cookie = jQuery.trim(cookies[i]);
+  //             // Does this cookie string begin with the name we want?
+  //             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+  //                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+  //                 break;
+  //             }
+  //         }
+  //     }
+  //     return cookieValue;
+  // }
+  // var csrftoken = getCookie('csrftoken');
+  //
+  // function csrfSafeMethod(method) {
+  //     // 这些HTTP方法不要求CSRF包含
+  //     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+  // }
+  // $.ajaxSetup({
+  //     beforeSend: function(xhr, settings) {
+  //         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+  //             xhr.setRequestHeader("X-CSRFToken", csrftoken);
+  //         }
+  //     }
+  // });
+
+function changece(a,article_id){
+  $(a).toggleClass("collectbtn");
+  $(a).toggleClass("uncollectbtn");
+  // var change = {
+  //   // "user_id":userid,
+  //   // "csrfmiddlewaretoken":{{ csrf_token }},
+  //   "article_id":article_id
+  // };
+  var u = "/myechartsite/index_customer/changece/"
+  $.ajax({
+            url:u,
+            type:"GET",
+            data:{
+                changecollected:1,
+                article_id:article_id
+            },
+            success:function (data) {
+              alert(data)
+            }
+        })
+  // $.post("/myechartsite/changece/",change,function(data){
+  //
+  // });
+}
+</script>
+{% endblock %}

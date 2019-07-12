@@ -1,0 +1,88 @@
+{% extends 'myechartsite/base_index_expert.html' %}
+{% load staticfiles %}
+{% block title %}文章搜索结果{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/article_collectedcss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}{% endblock %}
+
+{% block chart %}
+<div class="indexbg" style="margin-top:50px;border-radius:15px;">
+  <div class="row" style="">
+  <div class="col-md-1 col-lg-1 col-sm-1">
+
+  {% if request.session.level == "expert" %}
+    <a style="" href="{% url 'myechartsite:index_expert'%}">
+  {% elif request.session.level == "doctor" %}
+    <a style="" href="{% url 'myechartsite:index_doctor'%}">
+  {% else %}
+    <a style="" href="{% url 'myechartsite:index_customer'%}">
+  {% endif %}
+  <button type="button"  class="btn" id="backbtn" style=""><span style="color: #ffffff;">←</span></button>
+  </a>
+</div>
+ <div class="col-md-offset-3 col-md-4 col-sm-offset-3 col-sm-4" style="text-align:center;">
+   <h2 style = "color:#199df3">收藏文章</h2>
+  <!--<form method="get" style="margin-top:30px;margin-left:30px;" action="{% url 'myechartsite:search' %}">
+    {% csrf_token %}
+    <div class="form-group">
+    <div class="input-group jd_header">
+      <input type="search" class=" header_search" name="searchtitle" placeholder="Search for...">
+        <span class="input-group-btn" style=>
+          <button class="btn btnguide header_glass" type="submit" style="margin-right:-8px;"></button>
+        </span>
+    </div>
+    </div>
+  </form>
+  </div> -->
+  <!-- <div class="col-md-1 col-lg-1 col-sm-1">
+  <button type="button" class="btn" onclick="" style=></button>
+  </div> -->
+  </div>
+  </div>
+  <!-- <div class="alert">
+  {% if message %}
+  <div class="alert alert-warning" style="">{{ message }}</div>
+  {% endif %}
+  </div> -->
+
+  <div class="panel-body" style="">
+    {% for x in articles %}
+    <div class="row xw_c">
+      <div class="col-md-4 col-lg-4 col-sm-4">
+          <a style="" href="{% url 'myechartsite:article' x.id %}">
+        <div class="article-img" style="margin-top:20px;">
+        {% if x.imgurl %}
+        <img src={{x.imgurl}} alt="article-img" height="200px" width="100%" style="border-radius:10px;">
+        {% endif %}
+        </div>
+        </a>
+      </div>
+      <div class="col-md-8 col-lg-8 col-sm-8">
+        <div class="article-index">
+        <a style="" href="{% url 'myechartsite:article' x.id %}">
+        <h2 align="left" style ="">  {{x.title}}  </h2>
+        </a>
+        <br />
+        <p align="left">{{x.introduction}}</p>
+        </div>
+      </div>
+      </div>
+    {% empty %}
+      <div class="no-article">没有文章！</div>
+    {% endfor %}
+  </div>
+  <div class="changepage">
+  <ul class="pagination pagination-sm">
+  {{ page_obj.page_html|safe }}
+  </ul>
+  </div>
+</div>
+{% endblock %}
+
+{% block rightsidebar %}
+<div class="row" style="margin-right:0;min-height:1170px;">
+    <img src="{% static 'myechartsite/img/navlogo.png' %}" alt="" style="margin-left: 20%;margin-top: 50%;">
+</div>
+{% endblock %}
+{% block js%}
+
+{% endblock %}

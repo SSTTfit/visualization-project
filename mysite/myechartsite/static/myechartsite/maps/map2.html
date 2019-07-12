@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Hospitals</title>
+    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.js'></script>
+    <script src="jquery.min.js"></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.53.1/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body {margin: 0;padding: 0;
+        }
+        #map {position: absolute;top: 0;bottom: 0;width: 100%;
+        }
+    </style>
+</head>
+<body>
+<script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.min.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.2.0/mapbox-gl-geocoder.css' type='text/css' />
+<div id="map"></div>
+<script>
+    var placeName;
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWd5cHRsIiwiYSI6ImNqcDI3eGR2YjAyY2Mza3J0MnVxcDBleXEifQ.G5rT-P_uHSS1U7v-nuquMg';
+    var map = new mapboxgl.Map({
+        container: 'map', // container id
+        style: 'mapbox://styles/agyptl/cjttg71g10vsm1frw3srckj42', // stylesheet location
+        center: [103.000,35.000], // starting position [lng, lat]
+        zoom:4
+    });
+    var adminLayers = ['admin-country-disputed', 'admin-country'];
+    var geocoder = new MapboxGeocoder({
+        accessToken: mapboxgl.accessToken,
+        marker:false,
+        mapboxgl: mapboxgl
+    });
+    function filterBy(province,city,level,feature){
+        var filterItem;
+        if(province!='all')
+        {
+         if(city!='all')
+         {
+             if(level!='all')
+             {
+                 if(feature!='all')
+                 {
+                     filterItem=[
+                         'all',
+                         ["match", ["get", "province"], [province], true, false],
+                         ["match", ["get", "city"], [city], true, false],
+                         ["match", ["get", "level"], [level], true, false],
+                         ["match", ["get", "feature_department"], [feature], true, false]
+                     ]
+                 }else {
+                     filterItem=[
+                         'all',
+                         ["match", ["get", "province"], [province], true, false],
+                         ["match", ["get", "city"], [city], true, false],
+                         ["match", ["get", "level"], [level], true, false]
+                     ]
+                 }
+
+             }
+             else {
+                 if(feature!='all')
+                 {
+                     filterItem=[
+                         'all',
+                         ["match", ["get", "province"], [province], true, false],
+                         ["match", ["get", "city"], [city], true, false],
+                         ["match", ["get", "feature_department"], [feature], true, false]
+                     ]
+                 }else {
+                     filterItem=[
+                         'all',
+                         ["match", ["get", "province"], [province], true, false],
+                         ["match", ["get", "city"], [city], true, false]
+                     ]
+                 }
+             }
+         }else
+         {
+             if(level!='all')
+             {
+                 if(feature!='all')
+                 {
+                     filterItem=[
+                         'all',
+                         ["match", ["get", "province"], [province], true, false],
+                         ["match", ["get", "level"], [level], true, false],
+                         ["match", ["get", "feature_department"], [feature], true, false]
+                     ]
+                 }else {
+                     filterItem=[
+                         'all',
+                         ["match", ["get", "province"], [province], true, false],
+                         ["match", ["get", "level"], [level], true, false]
+                     ]
+                 }
+
+             }
+             else {
+                 if(feature!='all')
+                 {
+                     filterItem=[
+                         'all',
+                         ["match", ["get", "province"], [province], true, false],
+                         ["match", ["get", "feature_department"], [feature], true, false]
+                     ]
+                 }else {
+                     filterItem=[
+                         'all',
+                         ["match", ["get", "province"], [province], true, false]
+                     ]
+                 }
+             }
+         }
+        }else
+        {
+
+                if(level!='all')
+                {
+                    if(feature!='all')
+                    {
+                        filterItem=[
+                            'all',
+                            ["match", ["get", "level"], [level], true, false],
+                            ["match", ["get", "feature_department"], [feature], true, false]
+                        ]
+                    }else {
+                        filterItem=[
+                            'all',
+                            ["match", ["get", "level"], [level], true, false]
+                        ]
+                    }
+
+                }
+                else {
+                    if(feature!='all')
+                    {
+                        filterItem=[
+                            'all',
+                            ["match", ["get", "feature_department"], [feature], true, false]
+                        ]
+                    }else {
+                        filterItem=null;
+                    }
+                }
+        }
+        console.log(filterItem);
+        map.setFilter('hospital_point',filterItem);
+    };
+    function setgeocoder(place){
+        if(place!='all') {
+            //获取全写拼音（调用js中方法）
+           // placeName= place;
+           // console.log(placeName);
+            geocoder.query(place);
+        }
+    };
+
+    map.on('load', function() {
+        map.addSource('hospital',{
+            type: 'vector',
+            url: 'mapbox://agyptl.cjut5phdg10u532sgjd172nrg-7wn62'
+        });
+        map.addSource('hospital-2',{
+            type:'vector',
+            url:'mapbox://agyptl.cjuwb1pi31rha32sgj8n082bv-5ijgi'
+        });
+        map.addLayer({
+            "id": 'hospital_point_2',
+            "type": 'symbol',
+            "source": 'hospital-2',
+            'source-layer': 'hospital-2',
+            "layout": {
+                "icon-image": "marker-stroked-15",
+                "text-field": "{name}",
+                "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                "text-offset": [0, 0.6],
+                "text-size":10,
+                "text-anchor": "top"
+            },
+            "paint":{
+                "text-color":"#FE4F4F",
+                "icon-color":"#FE4F4F"
+            }
+        });
+        map.addLayer({
+            "id": 'hospital_point',
+            "type": 'symbol',
+            "source": 'hospital',
+            'source-layer': 'hospital-test',
+            "layout": {
+                "icon-image": "marker-15",
+                "text-field": "{name}",
+                "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+                "text-offset": [0, 0.6],
+                "text-size":10,
+                "text-anchor": "top"
+            },
+            "paint":{
+                "text-color":"#FE4F4F",
+                "icon-color":"#FE4F4F"
+            }
+        });
+        //设置语言
+      //  map.setLayoutProperty('country-label', 'text-field', ['get', 'name_zh-Hans']);
+      //  map.setLayoutProperty('place-city-label','visibility','none');
+        //设置国界
+        adminLayers.forEach(function(adminLayer) {
+            map.setFilter(adminLayer, ["match", ["get", "worldview"], ["all", 'CN'], true, false]);});
+    });
+
+    map.addControl(geocoder);
+   /* geocoder.on('result',function (e) {
+        geocoder.query(place);
+    })*/
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+{% extends 'myechartsite/base_show.html' %}
+{% load staticfiles %}
+{% block title %}最近检查{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/userindicss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}我的检查{% endblock %}
+
+{% block leftsidebar %}<!-- content part -->
+<div class="btn-group-vertical" role="group" id="lbtngp" aria-label="类型">
+  <button type="button" class="btn show">最近结果</button>
+  <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:inditrend' %}')">指标趋势</button>
+</div>
+{% endblock %}
+{% block chart %}
+            <div id="sign" style="height: 50px;width: 200px" >
+                <p><span id="year_span" style="color: #b558f6;margin-right: 5px;font-size:large;font-weight:600;">最近一次检查结果</span></p>
+            </div>
+            <div id="main">
+                <div class="scroll-control">
+                <div id="main-1"></div>
+                <div id="main-2"></div>
+                </div>
+            </div>
+{% endblock %}
+{% block rightsidebar %}
+<div class="row" style="margin-right:0;">
+    <img src="{% static 'myechartsite/img/navlogo.png' %}" alt="" style="margin-left: 20%;margin-top: 50%;">
+</div>
+{% endblock %}
+{% block js%}
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'myechartsite/js/userindi.js' %}"></script>
+<script>
+    function jump(url){
+        window.location.href=url;
+    }
+</script>
+{% endblock %}

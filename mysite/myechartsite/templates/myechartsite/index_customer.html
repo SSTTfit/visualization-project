@@ -1,0 +1,115 @@
+{% extends 'myechartsite/base_index_expert.html' %}
+{% load staticfiles %}
+{% block title %}主页{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/index_customercss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}{% endblock %}
+
+{% block chart %}
+<div class="row">
+    <div class="biaoqian">
+        <label style="color: #b558f6; font-size: large;">最近检查结果及指标变化趋势</label>
+    </div>
+</div>
+<div class="row">
+<div class="col-md-6 col-lg-6 col-sm-6">
+    <div class="row kuai" style="margin-left: 40%">
+        <a href="{% url 'myechartsite:userindi' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/userindi.png" alt="" style=""></a>
+    </div>
+</div>
+<div class="col-md-6 col-lg-6 col-sm-6">
+    <div class="row kuai">
+        <a href="{% url 'myechartsite:inditrend' %}"><img class="tupian" src="../../static/myechartsite/img/index_expert/inditrend.png" alt="" style=""></a>
+    </div>
+</div>
+</div>
+<div class="row" style = >
+    <div class="articlelist" style="border-radius:15px;">
+      <div class="row">
+        <div class="col-md-8 col-sm-8 col-xs-8 col-lg-8 ">
+          <form method="get" style="margin-top:30px;margin-left:30px;" action="{% url 'myechartsite:search' %}">
+            {% csrf_token %}
+            <div class="form-group">
+            <div class="input-group jd_header">
+              <input type="search" class=" header_search" name="searchtitle" placeholder="Search for...">
+                <span class="input-group-btn">
+                  <button class="btn btnguide header_glass" type="submit" style="margin-right:-8px;border-radius:30px;"></button>
+                </span>
+            </div>
+            </div><!-- /input-group -->
+          </form>
+        </div>
+        <div class="col-md-3 col-sm-3 col-xs-3 col-lg-3">
+          <a href="{% url 'myechartsite:article_collected' %}">
+            <button type="button" class="btn zixun" onclick="changecss(this)" style=></button>
+          </a>
+          <!-- <button type="button" class="btn infobtn" onclick="" style="float:left;">收藏资讯</button> -->
+        </div>
+      </div>
+      <div class="panel-body scroll1" style="height: 680px;margin-top:50px;margin-bottom:30px;">
+        {% for x in articles %}
+        <div class="row xw_c">
+          <div class="col-md-4 col-lg-4 col-sm-4">
+              <a style="" href="{% url 'myechartsite:article' x.id %}">
+            <div class="article-img" style="margin-top:20px;">
+            {% if x.imgurl %}
+            <img src={{x.imgurl}} alt="article-img" height="200px" width="100%" style="border-radius:10px;">
+            {% endif %}
+            </div>
+            </a>
+          </div>
+          <div class="col-md-8 col-lg-8 col-sm-8">
+            <div class="article-index">
+            <a style="" href="{% url 'myechartsite:article' x.id %}">
+            <h2 align="left" style ="">  {{x.title}}  </h2>
+            </a>
+            <br />
+            <p align="left">{{x.introduction}}</p>
+            </div>
+          </div>
+          </div>
+        {% empty %}
+          <div class="no-article">没有文章！</div>
+        {% endfor %}
+          <!-- <div class="row xw_c">
+              <ul>
+                  <li class="a">
+                      <a href="">
+                          <img src="../../static/myechartsite/img/articleindex/exam.png" alt="" style="border-radius:10px;">
+                          <h3>医保目录调整，或将改善罕见病患者用药现状</h3>
+                          <p>瓷娃娃、渐冻人、睡美人、狼人症......随着社会对罕见病关注度的不断提升  ... ...</p>
+                      </a>
+                  </li>
+              </ul>
+          </div> -->
+      </div>
+      <ul class="pagination pagination-sm">
+      {{ page_obj.page_html|safe }}
+      </ul>
+    </div>
+  </div>
+{% endblock %}
+
+{% block rightsidebar %}
+
+<!-- <div class="row" style="margin-right:0;">
+    <img src="../../static/myechartsite/img/navlogo.png" alt="" style="margin-left: 20%;margin-top:50px;">
+</div> -->
+<div class="btntitle">寻医问药</div>
+<div class="row" style="margin-right:0;text-align:center;min-height:1170px;">
+
+    <button type="button" class="btn btn-default rbtn" onclick="jump('{% url 'myechartsite:hospitalmap' %}')">搜索医院</button>
+    <p style="margin-left:20px;margin-top:5px;color:#999;">寻找您合适的医院</p>
+</div>
+{% endblock %}
+{% block js%}
+<script type="text/javascript">
+  function changecss(a){
+    $(a).toggleClass("zixun");
+     $(a).toggleClass("zixunact");
+  }
+  function jump(url){
+      window.location.href=url;
+  }
+</script>
+
+{% endblock %}

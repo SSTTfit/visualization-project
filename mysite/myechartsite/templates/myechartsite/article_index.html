@@ -1,0 +1,87 @@
+{% extends 'myechartsite/base_index_expert.html' %}
+{% load staticfiles %}
+{% block title %}文章搜索结果{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/article_indexcss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}{% endblock %}
+
+{% block chart %}
+<div class="indexbg">
+  <div class="row" style="">
+  <div class="col-md-1 col-lg-1 col-sm-1">
+
+  {% if request.session.level == "expert" %}
+    <a style="" href="{% url 'myechartsite:index_expert'%}">
+  {% elif request.session.level == "doctor" %}
+    <a style="" href="{% url 'myechartsite:index_doctor'%}">
+  {% else %}
+    <a style="" href="{% url 'myechartsite:index_customer'%}">
+  {% endif %}
+  <button type="button"  class="btn" id="backbtn" style=""><span style="color: #ffffff;">←</span></button>
+  </a>
+</div>
+<div class="col-md-8 col-lg-8 col-sm-8">
+  <form method="get" style="margin-top:30px;margin-left:30px;" action="{% url 'myechartsite:search' %}">
+    {% csrf_token %}
+    <div class="form-group">
+    <div class="input-group jd_header">
+      <input type="search" class=" header_search" name="searchtitle" placeholder="Search for...">
+        <span class="input-group-btn" style=>
+          <button class="btn btnguide header_glass" type="submit" style="margin-right:-8px;border-radius:50%;"></button>
+        </span>
+    </div>
+    </div><!-- /input-group -->
+  </form>
+  </div>
+  <div class="col-md-1 col-lg-1 col-sm-1">
+  <button type="button" class="btn zixun" onclick="" style=></button>
+  </div>
+  </div>
+  <div class="alert">
+  {% if message %}
+  <div class="alert alert-warning" style="">{{ message }}</div>
+  {% endif %}
+  </div>
+
+  <div class="content" style="margin-left:50px;margin-right:50px;">
+  {% for x in articles %}
+  <div class="row">
+    <div class="col-md-4 col-lg-4 col-sm-4">
+      <a style="" href="{% url 'myechartsite:article' x.id %}">
+        <div class="article-img" style="margin-top:30px;">
+          {% if x.imgurl %}
+          <img src={{x.imgurl}} alt="article-img" height="200px" width="100%" style="border-radius:10px;">
+          {% endif %}
+        </div>
+      </a>
+    </div>
+    <div class="col-md-8 col-lg-8 col-sm-8">
+      <div class="article-index">
+      <a style="" href="{% url 'myechartsite:article' x.id %}">
+      <h2>  {{x.title}}  </h2>
+      </a>
+      <br />
+      <p>{{x.introduction}}</p>
+      </div>
+    </div>
+    </div>
+  {% empty %}
+    <div class="no-article">没有找到您搜索的文章！</div>
+  {% endfor %}
+  </div>
+  <div class="changepage">
+  <ul class="pagination pagination-sm">
+  {{ page_obj.page_html|safe }}
+  </ul>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block rightsidebar %}
+<div class="row" style="margin-right:0;min-height:1170px;">
+    <img src="{% static 'myechartsite/img/navlogo.png' %}" alt="" style="margin-left: 20%;margin-top: 50%;">
+</div>
+{% endblock %}
+{% block js%}
+
+{% endblock %}

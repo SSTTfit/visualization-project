@@ -1,0 +1,252 @@
+{% extends 'myechartsite/base_show.html' %}
+{% load staticfiles %}
+{% block title %}玫瑰图{% endblock %}
+{% block css %}<link href="{% static 'myechartsite/css/disetempcss.css' %}" rel="stylesheet"/>{% endblock %}
+{% block kind %}疾病与温度{% endblock %}
+
+{% block leftsidebar %}
+
+          <div class="btn-group-vertical" role="group" id="lbtngp" aria-label="类型">
+            <button type="button" class="btn btn-default  btn-block unshow" onclick="jump('{% url 'myechartsite:diseage' %}')">疾病与年龄</button>
+            <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disegender' %}')">疾病与性别</button>
+            <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disewheather' %}')">疾病与天气</button>
+            <button type="button" class="btn show" >疾病与温度</button>
+            <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:diseyear' %}')">疾病与年份</button>
+            <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:disemonth' %}')">疾病与月份</button>
+            <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:diseaqi' %}')">与空气质量</button>
+            <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:arearatiomap' %}')">疾病与地域</button>
+            <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:arearatiochange' %}')">发病率变化</button>
+          </div>
+{% endblock %}
+{% block chart %}
+<div class="ctitle">
+    <label style="color: #b558f6; font-size: large; margin-top: 7px;" id="ytitle">2019年</label>
+    <label style="color: #d3d3d3; font-size: large; margin-top: 7px;font-size: x-large">|</label>
+    <!-- <label style="color: #b558f6; font-size: large; margin-top: 3%;width: auto"id="dise1">肾炎</label> -->
+    <label style="font-size: large; position: center; color: #9b9b9b">发病率与温度的关系</label>
+</div>
+          <div id="main" style=""></div>
+{% endblock %}
+{% block rightsidebar %}
+
+          <div class="disechoose">
+            <div h2 class="btntitle">选择疾病类型</div>
+            <div class="rbtngroup1">
+            <div class="btn-group-vertical scroll1" role="group" aria-label="选择疾病类型" id="rbtn1" >
+              <button type="button" id="rsgxy" class="btn rbtnact1" onclick="choosedise(this,'rbtnact1',0,'妊娠高血压')" style="margin-top:10px;">妊娠高血压</button>
+              <button type="button" id="hhd" class="btn rbtnact2" onclick="choosedise(this,'rbtnact2',1,'核黄疸')">核黄疸</button>
+              <button type="submit" id="sy" class="btn rbtnact3" onclick="choosedise(this,'rbtnact3',2,'肾炎')" >肾炎</button>
+              <button type="button" id="nsz" class="btn rbtnact4" onclick="choosedise(this,'rbtnact4',3,'尿石症')">尿石症</button>
+              <button type="submit" id="pgy" class="btn rbtnact5" onclick="choosedise(this,'rbtnact5',4,'膀胱炎')">膀胱炎</button>
+              <button type="button" id="sjs" class="btn rbtnact6" onclick="choosedise(this,'rbtnact6',5,'肾结石')">肾结石</button>
+              <button type="button" id="tnb" class="btn rbtnact7" onclick="choosedise(this,'rbtnact7',6,'糖尿病')">糖尿病</button>
+            </div>
+            </div>
+          </div>
+          <div class="yearchoose">
+            <div class="row" style="margin:0;">
+              <div class="col-sm-9 col-md-9 col-lg-9" style="padding-left:0;">
+                <div class="btntitle">年份筛选</div>
+              </div>
+              <div class="col-sm-3 col-md-3 col-lg-3">
+                <div class="yshow">
+                <div style="" id="ycshow">2019 </div>
+                <div style="color: #b558f6;margin-left:5px;">●</div>
+                </div>
+              </div>
+            </div>
+            <div class="rbtngroup2">
+              <div class="btn-toolbar scroll2" role="toolbar" aria-label="选择年份">
+                <div class="btn-group-vertical " role="group" aria-label="选择年份" id="rbtn2" style="" >
+                  <button type="button" class="btn rbtnnorm2" id="y2019" onclick="chooseyear(this,'2019','2019年')">2019</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2017','2017年')">2017</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2015','2015年')">2015</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2013','2013年')">2013</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2011','2011年')">2011</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2009','2009年')">2009</button>
+                </div>
+                <div class="btn-group-vertical" role="group" aria-label="选择年份" id="rbtn3" style="margin-left: 30px;">
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2018','2018年')">2018</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2016','2016年')">2016</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2019','2014年')">2014</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2019','2014年')">2012</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2019','2010年')">2010</button>
+                  <button type="button" class="btn rbtnnorm2" onclick="chooseyear(this,'2019','2008年')">2008</button>
+                </div>
+              </div>
+            </div>
+          </div>
+{% endblock %}
+{% block js%}
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script>
+    function jump(url){
+        window.location.href=url;
+    }
+</script>
+    <script type="text/javascript">
+        // var r = {{ data|safe }};
+        var diselist = ['rsgxy', 'hhd', 'sy', 'nsz', 'pgy', 'sjs', 'tnb']
+        var diselist_c = ['妊娠高血压','核黄疸','肾炎','尿石症','膀胱炎','肾结石','糖尿病'];
+        var yearlist = [2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019];
+        var templist = ['-20~-15摄氏度','-15~-10摄氏度','-10~-5摄氏度','-5~0摄氏度','0~5摄氏度','5~10摄氏度',
+                        '10~15摄氏度','15~20摄氏度','20~25摄氏度','25~30摄氏度','30~35摄氏度','35~40摄氏度'];
+        // var indilist = ['ndb','nph','jg','g','nbz','dhs','yxsy'];
+        // var indilist_c=['尿蛋白','尿ph','肌酐','钙','尿比重','胆红素','亚硝酸盐']
+        var p = new Array();
+        var k = new Array();
+        var year = 2019;
+        for (var j=0;j<diselist.length;j++){
+          p[j]=1
+        };
+        for (var j=0;j<yearlist.length;j++){
+          k[j]=1
+        };
+        var myChart = echarts.init(document.getElementById('main'));
+        var option = {
+            angleAxis: {
+                type: 'category',
+                data: ['-20~-15摄氏度','-15~-10摄氏度','-10~-5摄氏度','-5~0摄氏度','0~5摄氏度','5~10摄氏度',
+                      '10~15摄氏度','15~20摄氏度','20~25摄氏度','25~30摄氏度','30~35摄氏度','35~40摄氏度'],
+                axisLabel:{
+                  color:'#999',
+                  margin:20,
+                  fontSize:15
+                },
+                axisLine: {
+                  lineStyle: {
+                    color: '#999',
+                    width:1
+                  }
+                },
+                axisTick:{
+                  lineStyle: {
+                    color: '#999',
+                    width:1
+                  }
+                },
+                z: 10
+            },
+            color: ['rgb(181, 88, 246)', 'rgb(69, 120, 239)', 'rgb(41, 203, 151)', 'rgb(255, 119, 119)', 'rgb(255, 216, 57)','rgb(124, 181, 236)','rgb(247, 163, 92)'],
+            tooltip:{
+              formatter:'{b}<br />{a}发病率:{c}%',
+            },
+            radiusAxis: {
+              axisLabel: {
+                show:false
+            },
+            axisLine: {
+              show:false
+            },
+            axisTick: {
+            show: false
+            }
+            },
+            polar: {
+            },
+            series: [{
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: '',
+                stack: 'a'
+            }, {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'B',
+                stack: 'a'
+            }, {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'C',
+                stack: 'a'
+            },
+            {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'd',
+                stack: 'a'
+            },
+            {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'e',
+                stack: 'a'
+            },
+            {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'f',
+                stack: 'a'
+            },
+            {
+                type: 'bar',
+                data: [],
+                coordinateSystem: 'polar',
+                name: 'g',
+                stack: 'a'
+            },],
+            // legend: {
+            //     show: true,
+            //     data: []
+            // }
+          };
+
+
+
+      $(document).ready(function(){
+        $.getJSON('/myechartsite/index_expert/disetemp_data',function(ret){
+          data = ret;
+          for(var i=0;i<diselist_c.length;i++){
+            if (p[i]==1)
+            {
+                option.series[i].name = diselist_c[i];
+                }
+              };
+          datarefresh();
+          $("#y2019").addClass("rbtnact");
+        myChart.setOption(option,true);
+        })
+      });
+
+
+      function cleandata(){
+
+        for(var i=0;i<diselist.length;i++){
+           option.series[i].data=[]
+        }
+      };
+      function datarefresh(){
+        cleandata();
+        for(var i=0;i<diselist.length;i++){
+          if (p[i]==1)
+          {
+              option.series[i].data = data[year][diselist[i]];
+              }
+            }
+          };
+
+
+      function choosedise(a,css,n,indi){
+        $(a).toggleClass("rbtnnorm");
+         $(a).toggleClass(css);
+         p[n] = !p[n];
+         datarefresh();
+         myChart.setOption(option,true)
+       };
+       function chooseyear(a,y,t){
+         $(".rbtnnorm2").removeClass("rbtnact");
+         $(a).addClass("rbtnact");
+         $('#ytitle').html(t);
+         $('#ycshow').html(y);
+         year =y;
+         datarefresh();
+         myChart.setOption(option,true)
+       };
+    </script>
+{% endblock %}

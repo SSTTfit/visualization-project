@@ -1,0 +1,58 @@
+{% extends 'myechartsite/base_show.html' %}
+{% load staticfiles %}
+{% block title %}变换趋势{% endblock %}
+{% block css %}
+<link href="{% static 'myechartsite/css/diseage_trend_year.css' %}" rel="stylesheet"/>
+<script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+<script src="{% static 'myechartsite/js/inditrend.js' %}"></script>
+<link rel="stylesheet" href="{% static 'myechartsite/css/inditrendcss.css' %}">
+{% endblock %}
+{% block kind %}我的检查{% endblock %}
+
+{% block leftsidebar %}
+<div class="btn-group-vertical" role="group" id="lbtngp" aria-label="类型">
+  <button type="button" class="btn btn-default unshow" onclick="jump('{% url 'myechartsite:userindi' %}')">最近结果</button>
+  <button type="button" class="btn show" >指标趋势</button>
+</div>
+{% endblock %}
+{% block chart %}
+    <div class="row" style="background:#f5f6fa ">
+        <div class="text-center zhexianbianhuaqushi">
+            <label style="color: #b558f6; font-size: large; margin-top: 15px;font-weight:600;">指标变化趋势</label>
+        </div>
+    </div>
+    <div class="row s2">
+        <div id="zhexianJson" style="width: 80em;height:700px;float:left; margin-top: 0;margin-left: 9%;">
+            <script type="text/javascript">
+                var myChart = echarts.init(document.getElementById('zhexianJson'));
+                myChart.setOption(optionZhexian);
+            </script>
+        </div>
+    </div>
+
+{% endblock %}
+{% block rightsidebar %}
+<div class="disechoose">
+    <div class="btntitle">指标选择</div>
+    <div class="rbtngroup1">
+        <div class="btn-group-vertical" role="group" aria-label="指标选择" id="rbtn1" >  <!--scroll1待添加-->
+            <button type="button" id="tt" class="btn rbtnnorm" onclick="choosezhibiao(this,'rbtnact1',0,'tt','酮体')" style="margin-top:10px;">酮体</button>
+            <button type="button" id="yxsy" class="btn rbtnnorm" onclick="choosezhibiao(this,'rbtnact2',1,'yxsy','亚硝酸盐')">亚硝酸盐</button>
+            <button type="button" id="ptt" class="btn rbtnnorm" onclick="choosezhibiao(this,'rbtnact3',2,'ptt','葡萄糖')">葡萄糖</button>
+            <button type="button" id="dhs" class="btn rbtnnorm" onclick="choosezhibiao(this,'rbtnact4',3,'dhs','胆红素')">胆红素</button>
+            <button type="button" id="g" class="btn rbtnnorm" onclick="choosezhibiao(this,'rbtnact5',4,'g','钙')">钙</button>
+            <button type="button" id="zhibiao1" class="btn rbtnnorm" onclick="choosezhibiao(this,'rbtnact6',5,'zhibiao1','指标1')">指标1</button>
+            <button type="button" id="zhibiao2" class="btn rbtnnorm" onclick="choosezhibiao(this,'rbtnact7',6,'zhibiao2','指标2')">指标2</button>
+            <button type="button" id="zhibiao3" class="btn rbtnnorm" onclick="choosezhibiao(this,'rbtnact8',7,'zhibiao3','指标3')">指标3</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block js%}
+<script>
+    function jump(url){
+        window.location.href=url;
+    }
+</script>
+
+{% endblock %}
